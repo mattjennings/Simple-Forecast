@@ -10,7 +10,7 @@ import UIKit
 
 class RootViewController: UIViewController, UIPageViewControllerDelegate {
     
-    var pageViewController: UIPageViewController?
+    var pageViewController: WeatherPageVC?
     
     @IBOutlet weak var viewFrame: UIView!
     
@@ -19,7 +19,7 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         
         // Configure the page view controller and add it as a child view controller.
-        self.pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+        self.pageViewController = WeatherPageVC(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
         self.pageViewController!.delegate = self
         
         let startingViewController: DataViewController = self.modelController.viewControllerAtIndex(0, storyboard: self.storyboard!)!
@@ -42,13 +42,16 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         
         self.pageViewController!.didMoveToParentViewController(self)
         
+        
+        self.pageViewController!.parentView = self.view
         // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
         self.view.gestureRecognizers = self.pageViewController!.gestureRecognizers
     }
-    
+
     override func viewDidLayoutSubviews() {
         // After constraints are applied
         self.pageViewController!.view.frame = viewFrame.frame
+        
     }
     
     override func didReceiveMemoryWarning() {

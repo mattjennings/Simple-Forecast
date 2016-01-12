@@ -14,6 +14,7 @@
 		C2B786CC1C44A4130077DFDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2B786CB1C44A4130077DFDE /* Assets.xcassets */; };
 		C2B786CF1C44A4130077DFDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2B786CD1C44A4130077DFDE /* LaunchScreen.storyboard */; };
 		C2B786D71C44A44D0077DFDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2B786D61C44A44D0077DFDE /* Main.storyboard */; };
+		C2B786D91C44B9840077DFDE /* WeatherPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786D81C44B9840077DFDE /* WeatherPageVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		C2B786CE1C44A4130077DFDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C2B786D01C44A4130077DFDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2B786D61C44A44D0077DFDE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C2B786D81C44B9840077DFDE /* WeatherPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherPageVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				C2B786C01C44A4130077DFDE /* AppDelegate.swift */,
 				C2B786C21C44A4130077DFDE /* RootViewController.swift */,
+				C2B786D81C44B9840077DFDE /* WeatherPageVC.swift */,
 				C2B786C41C44A4130077DFDE /* DataViewController.swift */,
 				C2B786C61C44A4130077DFDE /* ModelController.swift */,
 				C2B786CB1C44A4130077DFDE /* Assets.xcassets */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2B786D91C44B9840077DFDE /* WeatherPageVC.swift in Sources */,
 				C2B786C31C44A4130077DFDE /* RootViewController.swift in Sources */,
 				C2B786C71C44A4130077DFDE /* ModelController.swift in Sources */,
 				C2B786C51C44A4130077DFDE /* DataViewController.swift in Sources */,

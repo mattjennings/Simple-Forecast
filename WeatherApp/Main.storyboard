@@ -22,7 +22,7 @@
                                 <color key="backgroundColor" red="0.26977370689655167" green="0.47843137250000001" blue="0.69832974137931036" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.60000002379999995" green="0.40000000600000002" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.26977370690000002" green="0.47843137250000001" blue="0.69832974140000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="IfR-02-kHw" firstAttribute="top" secondItem="8FG-Wn-JU9" secondAttribute="bottom" id="8yg-mw-390"/>
                             <constraint firstItem="8FG-Wn-JU9" firstAttribute="leading" secondItem="502-Ir-ELC" secondAttribute="leading" id="JVg-yL-viy"/>
