@@ -11,12 +11,13 @@ import UIKit
 class DataViewController: UIViewController {
 
     @IBOutlet weak var dataLabel: UILabel!
-    var dataObject: String = ""
-
+    var dataObject: Weekday = Weekday()
+    var bgColor: UIColor!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,14 +27,20 @@ class DataViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.dataLabel!.text = dataObject
-    }
+        self.dataLabel!.text = dataObject.title
+        //print(dataObject.index)
+        /*
+        let array = [
+                    UIColor(red: 52, green: 152, blue: 219, alpha: 1),
+                    UIColor(red: 155, green: 89, blue: 182, alpha: 1),
+                    UIColor(red: 39, green: 174, blue: 96, alpha: 1),
+                    UIColor(red: 241, green: 196, blue: 15, alpha: 1)
+                    ]
+        print(dataObject)
+*/
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("began")
-    }
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("move")
+        //self.view.backgroundColor = dataObject.bgColor
+        
     }
 
 

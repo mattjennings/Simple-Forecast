@@ -15,6 +15,8 @@
 		C2B786CF1C44A4130077DFDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2B786CD1C44A4130077DFDE /* LaunchScreen.storyboard */; };
 		C2B786D71C44A44D0077DFDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2B786D61C44A44D0077DFDE /* Main.storyboard */; };
 		C2B786D91C44B9840077DFDE /* WeatherPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786D81C44B9840077DFDE /* WeatherPageVC.swift */; };
+		C2B786DB1C45EE180077DFDE /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786DA1C45EE180077DFDE /* Weekday.swift */; };
+		C2B786E01C45F4130077DFDE /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786DF1C45F4130077DFDE /* DataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		C2B786D01C44A4130077DFDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2B786D61C44A44D0077DFDE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C2B786D81C44B9840077DFDE /* WeatherPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherPageVC.swift; sourceTree = "<group>"; };
+		C2B786DA1C45EE180077DFDE /* Weekday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		C2B786DF1C45F4130077DFDE /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,17 +64,43 @@
 		C2B786BF1C44A4130077DFDE /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				C2B786C01C44A4130077DFDE /* AppDelegate.swift */,
-				C2B786C21C44A4130077DFDE /* RootViewController.swift */,
-				C2B786D81C44B9840077DFDE /* WeatherPageVC.swift */,
-				C2B786C41C44A4130077DFDE /* DataViewController.swift */,
-				C2B786C61C44A4130077DFDE /* ModelController.swift */,
+				C2B786DC1C45EE240077DFDE /* Model */,
+				C2B786DD1C45EE280077DFDE /* View */,
+				C2B786DE1C45EE2E0077DFDE /* Controller */,
 				C2B786CB1C44A4130077DFDE /* Assets.xcassets */,
-				C2B786D61C44A44D0077DFDE /* Main.storyboard */,
-				C2B786CD1C44A4130077DFDE /* LaunchScreen.storyboard */,
 				C2B786D01C44A4130077DFDE /* Info.plist */,
 			);
 			path = WeatherApp;
+			sourceTree = "<group>";
+		};
+		C2B786DC1C45EE240077DFDE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C2B786DA1C45EE180077DFDE /* Weekday.swift */,
+				C2B786DF1C45F4130077DFDE /* DataService.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C2B786DD1C45EE280077DFDE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2B786CD1C44A4130077DFDE /* LaunchScreen.storyboard */,
+				C2B786D61C44A44D0077DFDE /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		C2B786DE1C45EE2E0077DFDE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C2B786C01C44A4130077DFDE /* AppDelegate.swift */,
+				C2B786C61C44A4130077DFDE /* ModelController.swift */,
+				C2B786C41C44A4130077DFDE /* DataViewController.swift */,
+				C2B786D81C44B9840077DFDE /* WeatherPageVC.swift */,
+				C2B786C21C44A4130077DFDE /* RootViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,7 +175,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2B786D91C44B9840077DFDE /* WeatherPageVC.swift in Sources */,
+				C2B786E01C45F4130077DFDE /* DataService.swift in Sources */,
 				C2B786C31C44A4130077DFDE /* RootViewController.swift in Sources */,
+				C2B786DB1C45EE180077DFDE /* Weekday.swift in Sources */,
 				C2B786C71C44A4130077DFDE /* ModelController.swift in Sources */,
 				C2B786C51C44A4130077DFDE /* DataViewController.swift in Sources */,
 				C2B786C11C44A4130077DFDE /* AppDelegate.swift in Sources */,

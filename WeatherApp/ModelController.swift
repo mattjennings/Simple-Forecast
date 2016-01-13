@@ -20,14 +20,13 @@ import UIKit
 
 class ModelController: NSObject, UIPageViewControllerDataSource {
 
-    var pageData: [String] = []
+    var pageData: [Weekday] = []
 
 
     override init() {
         super.init()
         // Create the data model.
-        let dateFormatter = NSDateFormatter()
-        pageData = dateFormatter.monthSymbols
+        pageData = DataService.weekdays
     }
 
     func viewControllerAtIndex(index: Int, storyboard: UIStoryboard) -> DataViewController? {
@@ -57,6 +56,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         }
         
         index--
+        DataService.currentIndex = index
         return self.viewControllerAtIndex(index, storyboard: viewController.storyboard!)
     }
 
@@ -67,6 +67,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         }
         
         index++
+        DataService.currentIndex = index
         if index == self.pageData.count {
             return nil
         }
