@@ -49,29 +49,31 @@ class WeatherPageVC: UIPageViewController, UIScrollViewDelegate {
         
         
 
-        var nextIndex: Int = clamp(DataService.currentIndex-1 + Int(1*sign(percentage)), lower: 0, upper: DataService.weekdays.count-1)
-        var currentIndex: Int = clamp(DataService.currentIndex-1, lower: 0, upper: DataService.weekdays.count-1)
-        print(nextIndex)
+        let nextIndex: Int = clamp(DataService.currentIndex-1 + Int(1*sign(percentage)), lower: 0, upper: DataService.weekdays.count-1)
+        
+        let currentIndex: Int = clamp(DataService.currentIndex-1, lower: 0, upper: DataService.weekdays.count-1)
+        
+        
+        print("\(DataService.weekdays[currentIndex].title) to \(DataService.weekdays[nextIndex].title)")
+        
         parentView.backgroundColor = blendColor(DataService.weekdays[currentIndex].bgColor, secondColor: DataService.weekdays[nextIndex].bgColor, percent: CGFloat(percentage))
-//        self.view.backgroundColor = parentView.backgroundColor
+        
     }
     
     func blendColor(firstColor: UIColor, secondColor: UIColor, percent: CGFloat) -> UIColor {
         var difference = [CGFloat](count: 3, repeatedValue: 0.0) //RGB
-        //var color = UIColor!
-        
         
         difference[0] = (firstColor.coreImageColor!.red) - (secondColor.coreImageColor!.red)
         difference[1] = (firstColor.coreImageColor!.green) - (secondColor.coreImageColor!.green)
         difference[2] = (firstColor.coreImageColor!.blue) - (secondColor.coreImageColor!.blue)
         
-        print(difference[0])
-        print(difference[1])
-        print(difference[2])
         
-        let r: CGFloat = clamp(firstColor.coreImageColor!.red + (difference[0] * percent/100), lower: 0.0, upper: 1.0)
-        let g: CGFloat = clamp(firstColor.coreImageColor!.green + (difference[1] * percent/100), lower: 0.0, upper: 1.0)
-        let b: CGFloat = clamp(firstColor.coreImageColor!.blue + (difference[0] * percent/100), lower: 0.0, upper: 1.0)
+        
+        let r: CGFloat = clamp(secondColor.coreImageColor!.red + (difference[0]) - (difference[0] * percent/100), lower: 0.0, upper: 1.0)
+        let g: CGFloat = clamp(secondColor.coreImageColor!.green + (difference[1]) - (difference[1] * percent/100), lower: 0.0, upper: 1.0)
+        let b: CGFloat = clamp(secondColor.coreImageColor!.blue + (difference[2]) - (difference[2] * percent/100), lower: 0.0, upper: 1.0)
+        
+        print("Difference: \(difference[0]) Start: \(firstColor.coreImageColor!.red) Current: \(r) Target: \(secondColor.coreImageColor!.red)")
         let color = UIColor(red: r, green: g, blue: b, alpha: 1)
         
         return color
