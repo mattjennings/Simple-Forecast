@@ -9,7 +9,7 @@
 import UIKit
 
 
-class WeatherPageVC: UIPageViewController, UIScrollViewDelegate {
+class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrollViewDelegate {
 
     var parentView: UIView!
     
@@ -21,6 +21,10 @@ class WeatherPageVC: UIPageViewController, UIScrollViewDelegate {
                 (v as! UIScrollView).delegate = self
             }
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        parentView.backgroundColor = DataService.weekdays[0].bgColor
     }
     
     override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?) {
@@ -37,47 +41,48 @@ class WeatherPageVC: UIPageViewController, UIScrollViewDelegate {
         var percentage = 0.0
         
         // Percentage of view scrolled
-        if sx >= 0.0 && sx < 375.0 {
+        if sx > 0.0 && sx < 375.0 {
             percentage = (Double(sx) / 375) * -100
-        } else if sx > 375.0 && sx <= 750.0 {
-            percentage = ((375 - Double(sx)) / 750) * -200
+        } else if sx > 375.0 && sx < 750.0 {
+            percentage = ((375 - Double(sx)) / 375) * -100
         } else {
             percentage = 100
         }
-        
-//        parentView.backgroundColor = blendColor(self.view.backgroundColor!, secondColor: UIColor.blueColor(), percent: CGFloat(percentage))
-        
-        
 
-        let nextIndex: Int = clamp(DataService.currentIndex-1 + Int(1*sign(percentage)), lower: 0, upper: DataService.weekdays.count-1)
+        // Indexes
+        let currentIndex: Int = clamp(DataService.currentIndex, lower: 0, upper: DataService.weekdays.count-1)
+        let nextIndex: Int = clamp(DataService.currentIndex + Int(1*sign(percentage)), lower: 0, upper: DataService.weekdays.count-1)
         
-        let currentIndex: Int = clamp(DataService.currentIndex-1, lower: 0, upper: DataService.weekdays.count-1)
-        
-        
-        print("\(DataService.weekdays[currentIndex].title) to \(DataService.weekdays[nextIndex].title)")
-        
-        parentView.backgroundColor = blendColor(DataService.weekdays[currentIndex].bgColor, secondColor: DataService.weekdays[nextIndex].bgColor, percent: CGFloat(percentage))
-        
+        // Reverse equation if percentage is -
+        if percentage != 100 {
+            if sign(percentage) > 0 {
+                parentView.backgroundColor = blendColor(DataService.weekdays[currentIndex].bgColor, secondColor: DataService.weekdays[nextIndex].bgColor, percent: CGFloat(percentage/100))
+            } else if sign(percentage) < 0 {
+                parentView.backgroundColor = blendColor(DataService.weekdays[nextIndex].bgColor, secondColor: DataService.weekdays[currentIndex].bgColor, percent: CGFloat(percentage/100))
+            }
+        }
     }
     
     func blendColor(firstColor: UIColor, secondColor: UIColor, percent: CGFloat) -> UIColor {
         var difference = [CGFloat](count: 3, repeatedValue: 0.0) //RGB
-        
+        let perc = abs(percent)
+
         difference[0] = (firstColor.coreImageColor!.red) - (secondColor.coreImageColor!.red)
         difference[1] = (firstColor.coreImageColor!.green) - (secondColor.coreImageColor!.green)
         difference[2] = (firstColor.coreImageColor!.blue) - (secondColor.coreImageColor!.blue)
         
         
-        
-        let r: CGFloat = clamp(secondColor.coreImageColor!.red + (difference[0]) - (difference[0] * percent/100), lower: 0.0, upper: 1.0)
-        let g: CGFloat = clamp(secondColor.coreImageColor!.green + (difference[1]) - (difference[1] * percent/100), lower: 0.0, upper: 1.0)
-        let b: CGFloat = clamp(secondColor.coreImageColor!.blue + (difference[2]) - (difference[2] * percent/100), lower: 0.0, upper: 1.0)
-        
-        print("Difference: \(difference[0]) Start: \(firstColor.coreImageColor!.red) Current: \(r) Target: \(secondColor.coreImageColor!.red)")
+        // TODO: test this function on a slider with 2 defined colors... perfect this function THEN figure out the view transitions
+        let r: CGFloat = clamp(secondColor.coreImageColor!.red + (difference[0]) - (difference[0] * perc), lower: 0.0, upper: 1.0)
+        let g: CGFloat = clamp(secondColor.coreImageColor!.green + (difference[1]) - (difference[1] * perc), lower: 0.0, upper: 1.0)
+        let b: CGFloat = clamp(secondColor.coreImageColor!.blue + (difference[2]) - (difference[2] * perc), lower: 0.0, upper: 1.0)
+
         let color = UIColor(red: r, green: g, blue: b, alpha: 1)
         
         return color
     }
+    
+
     
     func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
         return min(max(value, lower), upper)
@@ -92,7 +97,6 @@ class WeatherPageVC: UIPageViewController, UIScrollViewDelegate {
             return 0
         }
     }
-    
     /*
     // MARK: - Navigation
 

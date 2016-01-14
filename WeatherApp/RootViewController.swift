@@ -101,6 +101,5 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         return .Mid
     }
     
-    
 }
 
