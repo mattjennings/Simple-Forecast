@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 
 class Weekday: Equatable {
-    
-    private var _index: Int!
+
     private var _bgColor: UIColor!
     private var _title: String!
     
@@ -19,22 +18,16 @@ class Weekday: Equatable {
         return _title
     }
     
-    var index: Int {
-        return _index
-    }
-    
     var bgColor: UIColor {
         return _bgColor
     }
     
-    init(index: Int, bgColor: UIColor, title: String) {
-        _index = index
+    init(bgColor: UIColor, title: String) {
         _bgColor = bgColor
         _title = title
     }
     
     init() {
-        _index = 0
         _bgColor = UIColor.whiteColor()
         _title = "not initialized"
     }

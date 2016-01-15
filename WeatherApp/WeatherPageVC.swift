@@ -17,11 +17,13 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Get the scroll view
         for v in self.view.subviews{
             if v.isKindOfClass(UIScrollView){
                 (v as! UIScrollView).delegate = self
             }
         }
+        
         viewWidth = self.view.bounds.width
     }
     
@@ -97,7 +99,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
             return 0
         }
     }
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -105,7 +107,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+
 
 }
 
