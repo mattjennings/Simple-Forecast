@@ -322,6 +322,7 @@
 				C2B786D51C44A4130077DFDE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

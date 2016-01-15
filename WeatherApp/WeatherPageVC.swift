@@ -12,6 +12,7 @@ import UIKit
 class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrollViewDelegate {
 
     var parentView: UIView!
+    var viewWidth: CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
                 (v as! UIScrollView).delegate = self
             }
         }
+        viewWidth = self.view.bounds.width
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -37,14 +39,14 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
         // snapped = 375, left = 0, right = 750
-        let sx = scrollView.contentOffset.x
-        var percentage = 0.0
+        let sx: CGFloat = CGFloat(scrollView.contentOffset.x)
+        var percentage: CGFloat = 0.0
         
         // Percentage of view scrolled
-        if sx > 0.0 && sx < 375.0 {
-            percentage = (Double(sx) / 375) * -100
-        } else if sx > 375.0 && sx < 750.0 {
-            percentage = ((375 - Double(sx)) / 375) * -100
+        if sx > 0.0 && sx < viewWidth {
+            percentage = (sx / viewWidth) * CGFloat(-100)
+        } else if sx > viewWidth && sx < viewWidth * 2 {
+            percentage = ((viewWidth - sx) / viewWidth) * -100
         } else {
             percentage = 100
         }
@@ -71,8 +73,6 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         difference[1] = (firstColor.coreImageColor!.green) - (secondColor.coreImageColor!.green)
         difference[2] = (firstColor.coreImageColor!.blue) - (secondColor.coreImageColor!.blue)
         
-        
-        // TODO: test this function on a slider with 2 defined colors... perfect this function THEN figure out the view transitions
         let r: CGFloat = clamp(secondColor.coreImageColor!.red + (difference[0]) - (difference[0] * perc), lower: 0.0, upper: 1.0)
         let g: CGFloat = clamp(secondColor.coreImageColor!.green + (difference[1]) - (difference[1] * perc), lower: 0.0, upper: 1.0)
         let b: CGFloat = clamp(secondColor.coreImageColor!.blue + (difference[2]) - (difference[2] * perc), lower: 0.0, upper: 1.0)
@@ -88,7 +88,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         return min(max(value, lower), upper)
     }
     
-    func sign(num: Double) -> Double {
+    func sign(num: CGFloat) -> Int {
         if num > 0 {
             return 1
         } else if num < 0 {
