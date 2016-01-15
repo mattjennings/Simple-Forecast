@@ -10,3 +10,5 @@ import Foundation
 
 let API_KEY = "09c72ff225abb33534a6ee08ffd85687"
 let URL_BASE = "http://api.openweathermap.org/data/2.5/"
+
+typealias DownloadComplete = () -> ()
