@@ -28,7 +28,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     }
     
     override func viewWillAppear(animated: Bool) {
-        parentView.backgroundColor = DataService.weekdays[0].bgColor
+        parentView.backgroundColor = DataService.instance.weekdays[0].bgColor
     }
     
     override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?) {
@@ -54,15 +54,15 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         }
 
         // Indexes
-        let currentIndex: Int = clamp(DataService.currentIndex, lower: 0, upper: DataService.weekdays.count-1)
-        let nextIndex: Int = clamp(DataService.currentIndex + Int(1*sign(percentage)), lower: 0, upper: DataService.weekdays.count-1)
+        let currentIndex: Int = clamp(DataService.instance.currentIndex, lower: 0, upper: DataService.instance.weekdays.count-1)
+        let nextIndex: Int = clamp(DataService.instance.currentIndex + Int(1*sign(percentage)), lower: 0, upper: DataService.instance.weekdays.count-1)
         
         // Reverse equation if percentage is -
         if percentage != 100 {
             if sign(percentage) > 0 {
-                parentView.backgroundColor = blendColor(DataService.weekdays[currentIndex].bgColor, secondColor: DataService.weekdays[nextIndex].bgColor, percent: CGFloat(percentage/100))
+                parentView.backgroundColor = blendColor(DataService.instance.weekdays[currentIndex].bgColor, secondColor: DataService.instance.weekdays[nextIndex].bgColor, percent: CGFloat(percentage/100))
             } else if sign(percentage) < 0 {
-                parentView.backgroundColor = blendColor(DataService.weekdays[nextIndex].bgColor, secondColor: DataService.weekdays[currentIndex].bgColor, percent: CGFloat(percentage/100))
+                parentView.backgroundColor = blendColor(DataService.instance.weekdays[nextIndex].bgColor, secondColor: DataService.instance.weekdays[currentIndex].bgColor, percent: CGFloat(percentage/100))
             }
         }
     }

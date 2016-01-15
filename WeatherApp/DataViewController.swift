@@ -17,7 +17,8 @@ class DataViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateWeekdays:", name: "onReceivedWeather", object: nil);        
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,19 +29,17 @@ class DataViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.dataLabel!.text = dataObject.title
-        //print(dataObject.index)
-        /*
-        let array = [
-                    UIColor(red: 52, green: 152, blue: 219, alpha: 1),
-                    UIColor(red: 155, green: 89, blue: 182, alpha: 1),
-                    UIColor(red: 39, green: 174, blue: 96, alpha: 1),
-                    UIColor(red: 241, green: 196, blue: 15, alpha: 1)
-                    ]
-        print(dataObject)
-*/
-    
-        //self.view.backgroundColor = dataObject.bgColor
+        updateData()
         
+    }
+    
+    func updateWeekdays(notif: AnyObject) {
+        print("update")
+        updateData()
+    }
+    
+    func updateData() {
+        self.dataLabel!.text = dataObject.temperature
     }
 
 

@@ -14,6 +14,8 @@ class Weekday: Equatable {
     private var _bgColor: UIColor!
     private var _title: String!
     
+    private var _temperature: String!
+    
     var title: String {
         return _title
     }
@@ -22,14 +24,24 @@ class Weekday: Equatable {
         return _bgColor
     }
     
+    var temperature: String {
+        set (newVal) {
+            _temperature = newVal
+        } get {
+            return _temperature   
+        }
+    }
+    
     init(bgColor: UIColor, title: String) {
         _bgColor = bgColor
         _title = title
+        _temperature = "0"
     }
     
     init() {
         _bgColor = UIColor.whiteColor()
         _title = "not initialized"
+        _temperature = "0"
     }
     
 }
