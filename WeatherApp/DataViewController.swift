@@ -8,10 +8,11 @@
 
 import UIKit
 
-class DataViewController: UIViewController {
+class DataViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
+    @IBOutlet weak var dayForecastTable: UITableView!
     
     var dataObject: Weekday!
     var bgColor: UIColor!
@@ -21,9 +22,11 @@ class DataViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
 
         self.view.backgroundColor = UIColor.clearColor()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateWeekdays:", name: "onReceivedWeather", object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateWeekday:", name: "onReceivedWeather", object: nil);
         
-        
+        dayForecastTable.delegate = self
+        dayForecastTable.dataSource = self
+        dayForecastTable.backgroundColor = UIColor.clearColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,13 +41,35 @@ class DataViewController: UIViewController {
 //        iconImg.image = invertImage(iconImg.image!)
     }
     
-    func updateWeekdays(notif: AnyObject) {
-        print("update")
+    func updateWeekday(notif: AnyObject) {
         updateData()
     }
     
     func updateData() {
         
+    }
+    
+    
+    // Table view
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCellWithIdentifier("DayForecastCell", forIndexPath: indexPath) as? DayForecastCell {
+            
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor.clearColor()
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
     }
 }
 

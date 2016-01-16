@@ -40,7 +40,10 @@ class DataService {
     
     func getForecast(completed: DownloadComplete) {
         
-        Alamofire.request(.GET, "\(URL_BASE)forecast?q=Brandon,ca&mode=json&cnt=7&units=metric&APPID=\(API_KEY)")
+        // forecast/daily?q= gets the 16 day forecast so we can restrict it to 7 results
+        // forecast?q= gets the 5 day forecast in 3 hour intervals
+        
+        Alamofire.request(.GET, "\(URL_BASE)forecast/daily?q=Brandon,ca&mode=json&cnt=7&units=metric&APPID=\(API_KEY)")
             .responseJSON { response in
                 print(response.request)  // original URL request
                 
