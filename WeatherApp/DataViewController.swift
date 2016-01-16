@@ -10,15 +10,20 @@ import UIKit
 
 class DataViewController: UIViewController {
 
-    @IBOutlet weak var dataLabel: UILabel!
-    var dataObject: Weekday = Weekday()
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var iconImg: UIImageView!
+    
+    var dataObject: Weekday!
     var bgColor: UIColor!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateWeekdays:", name: "onReceivedWeather", object: nil);        
+        self.view.backgroundColor = UIColor.clearColor()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateWeekdays:", name: "onReceivedWeather", object: nil);
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,9 +33,9 @@ class DataViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.dataLabel!.text = dataObject.title
+        self.dayLabel!.text = dataObject.title
         updateData()
-        
+//        iconImg.image = invertImage(iconImg.image!)
     }
     
     func updateWeekdays(notif: AnyObject) {
@@ -39,9 +44,9 @@ class DataViewController: UIViewController {
     }
     
     func updateData() {
-        self.dataLabel!.text = dataObject.temperature
+        
     }
-
-
 }
+
+
 

@@ -69,7 +69,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         var index = self.indexOfViewController(viewController as! DataViewController)
-                DataService.instance.currentIndex = index
+        DataService.instance.currentIndex = index
         if index == NSNotFound {
             return nil
         }

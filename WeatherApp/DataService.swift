@@ -16,11 +16,6 @@ class DataService {
     
     private var _currentIndex: Int = 0
     
-    private var _city: String!
-    private var _country: String!
-    private var _temperature: [String]!
-    private var _wind: [String]!
-    
     private var _weekdays = [
         Weekday(bgColor: UIColor(red: 243/255, green: 156/255, blue: 18/255, alpha: 1), title: "Sunday"),     // Orange
         Weekday(bgColor: UIColor(red: 197/255, green: 57/255, blue: 43/255, alpha: 1), title: "Monday"),      // Red
@@ -68,6 +63,14 @@ class DataService {
                                     // Temperature
                                     if let temp = main["temp"] as? Double {
                                         self.weekdays[i].temperature = "\(temp)"
+                                    }
+                                    
+                                    if let tempMin = main["temp_min"] as? Double {
+                                        self.weekdays[i].temperatureMin = "\(tempMin)"
+                                    }
+                                    
+                                    if let tempMax = main["temp_max"] as? Double {
+                                        self.weekdays[i].temperatureMax = "\(tempMax)"
                                     }
                                 }
                             }

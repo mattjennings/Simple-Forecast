@@ -19,6 +19,7 @@
 		C2B786DB1C45EE180077DFDE /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786DA1C45EE180077DFDE /* Weekday.swift */; };
 		C2B786E01C45F4130077DFDE /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786DF1C45F4130077DFDE /* DataService.swift */; };
 		C2B787001C4894D70077DFDE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786FF1C4894D70077DFDE /* Constants.swift */; };
+		C2B787021C49DFE50077DFDE /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C2B787011C49DFE50077DFDE /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		C2B786DA1C45EE180077DFDE /* Weekday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
 		C2B786DF1C45F4130077DFDE /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		C2B786FF1C4894D70077DFDE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C2B787011C49DFE50077DFDE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EF4E3861C638742EACF205FB /* Pods-WeatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +66,7 @@
 		C2B786B41C44A4130077DFDE = {
 			isa = PBXGroup;
 			children = (
+				C2B787011C49DFE50077DFDE /* README.md */,
 				C2B786BF1C44A4130077DFDE /* WeatherApp */,
 				C2B786BE1C44A4130077DFDE /* Products */,
 				90DD03E4E8B8C4F25EFF6651 /* Pods */,
@@ -165,6 +168,7 @@
 				TargetAttributes = {
 					C2B786BC1C44A4130077DFDE = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = DXZ9N5DP28;
 					};
 				};
 			};
@@ -258,6 +262,7 @@
 				C2B786DB1C45EE180077DFDE /* Weekday.swift in Sources */,
 				C2B786C71C44A4130077DFDE /* ModelController.swift in Sources */,
 				C2B786C51C44A4130077DFDE /* DataViewController.swift in Sources */,
+				C2B787021C49DFE50077DFDE /* README.md in Sources */,
 				C2B786C11C44A4130077DFDE /* AppDelegate.swift in Sources */,
 				C2B787001C4894D70077DFDE /* Constants.swift in Sources */,
 			);
@@ -365,10 +370,14 @@
 			baseConfigurationReference = EF4E3861C638742EACF205FB /* Pods-WeatherApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WeatherApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dormgames.WeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -377,10 +386,14 @@
 			baseConfigurationReference = 52CBB8A2DD46B0A6C965C07B /* Pods-WeatherApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WeatherApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dormgames.WeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

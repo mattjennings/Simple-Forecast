@@ -3,7 +3,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Bold</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Root View Controller-->
         <scene sceneID="clB-vc-fyl">
@@ -49,30 +55,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cF2-Le-7mQ">
-                                <rect key="frame" x="20" y="20" width="560" height="16.5"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Monday" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cF2-Le-7mQ">
+                                <rect key="frame" x="20" y="529" width="560" height="50.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="41"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1b-V9-EN7">
-                                <rect key="frame" x="20" y="44" width="560" height="535.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sun" translatesAutoresizingMaskIntoConstraints="NO" id="Tbj-rm-Bph">
+                                <rect key="frame" x="185" y="184" width="231" height="231"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="231" id="6BN-nA-YUb"/>
+                                    <constraint firstAttribute="width" constant="231" id="bsb-TZ-2xz"/>
+                                    <constraint firstAttribute="height" constant="231" id="pqR-jI-KJV"/>
+                                    <constraint firstAttribute="width" constant="231" id="sjA-hs-dy9"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="6BN-nA-YUb"/>
+                                        <exclude reference="sjA-hs-dy9"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.26977370690000002" green="0.47843137250000001" blue="0.69832974140000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="s1b-V9-EN7" secondAttribute="trailing" constant="20" symbolic="YES" id="333-Jl-G0r"/>
-                            <constraint firstItem="s1b-V9-EN7" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="20" symbolic="YES" id="CIC-qa-9gW"/>
+                            <constraint firstItem="Tbj-rm-Bph" firstAttribute="centerY" secondItem="ZwX-cT-FIQ" secondAttribute="centerY" id="ALC-6N-cF6"/>
+                            <constraint firstItem="Tbj-rm-Bph" firstAttribute="top" secondItem="fXf-Jd-eTc" secondAttribute="bottom" constant="83" id="DMs-YJ-UfQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Tbj-rm-Bph" secondAttribute="trailing" constant="164" id="Dk8-eO-ppD"/>
+                            <constraint firstItem="EPS-s9-h4K" firstAttribute="top" secondItem="cF2-Le-7mQ" secondAttribute="bottom" constant="20.5" id="EVz-uk-Lk3"/>
+                            <constraint firstAttribute="trailing" secondItem="Tbj-rm-Bph" secondAttribute="trailing" constant="184" id="HO9-XJ-aVA"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="20" symbolic="YES" id="PnF-O8-Bso"/>
-                            <constraint firstAttribute="bottom" secondItem="s1b-V9-EN7" secondAttribute="bottom" constant="20" symbolic="YES" id="Xg4-Xc-7kb"/>
+                            <constraint firstItem="cF2-Le-7mQ" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="WiA-VA-1FD"/>
+                            <constraint firstItem="Tbj-rm-Bph" firstAttribute="centerX" secondItem="ZwX-cT-FIQ" secondAttribute="centerX" id="Y9C-NU-VYa"/>
                             <constraint firstAttribute="trailing" secondItem="cF2-Le-7mQ" secondAttribute="trailing" constant="20" symbolic="YES" id="cCk-mG-gz5"/>
-                            <constraint firstItem="s1b-V9-EN7" firstAttribute="top" secondItem="cF2-Le-7mQ" secondAttribute="bottom" constant="8" symbolic="YES" id="kQJ-gh-hu4"/>
+                            <constraint firstItem="Tbj-rm-Bph" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" constant="165" id="clZ-wt-FX0"/>
+                            <constraint firstItem="Tbj-rm-Bph" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="185" id="e1S-6x-ljv"/>
+                            <constraint firstItem="Tbj-rm-Bph" firstAttribute="top" secondItem="fXf-Jd-eTc" secondAttribute="bottom" constant="164" id="iSI-uY-Bdj"/>
+                            <constraint firstItem="cF2-Le-7mQ" firstAttribute="trailing" secondItem="ZwX-cT-FIQ" secondAttribute="trailingMargin" id="jJ6-i5-2id"/>
+                            <constraint firstItem="Tbj-rm-Bph" firstAttribute="centerX" secondItem="ZwX-cT-FIQ" secondAttribute="centerX" id="qDf-hF-tAV"/>
+                            <constraint firstItem="Tbj-rm-Bph" firstAttribute="top" secondItem="fXf-Jd-eTc" secondAttribute="bottom" constant="10" id="sCU-Ox-cYt"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="top" secondItem="ZwX-cT-FIQ" secondAttribute="top" constant="20" symbolic="YES" id="zem-Jm-uYh"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DMs-YJ-UfQ"/>
+                                <exclude reference="Dk8-eO-ppD"/>
+                                <exclude reference="HO9-XJ-aVA"/>
+                                <exclude reference="clZ-wt-FX0"/>
+                                <exclude reference="e1S-6x-ljv"/>
+                                <exclude reference="iSI-uY-Bdj"/>
+                                <exclude reference="qDf-hF-tAV"/>
+                                <exclude reference="sCU-Ox-cYt"/>
+                                <exclude reference="PnF-O8-Bso"/>
+                                <exclude reference="cCk-mG-gz5"/>
+                                <exclude reference="zem-Jm-uYh"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="dataLabel" destination="cF2-Le-7mQ" id="3EH-BK-JV6"/>
+                        <outlet property="dayLabel" destination="cF2-Le-7mQ" id="HGF-Ml-yeC"/>
+                        <outlet property="iconImg" destination="Tbj-rm-Bph" id="Mhy-k1-9dV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>
@@ -80,4 +122,7 @@
             <point key="canvasLocation" x="597" y="-243"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="sun" width="2112" height="2112"/>
+    </resources>
 </document>

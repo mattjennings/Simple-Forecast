@@ -52,13 +52,13 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         } else {
             percentage = 100
         }
-
+        //print(percentage)
         // Indexes
         let currentIndex: Int = clamp(DataService.instance.currentIndex, lower: 0, upper: DataService.instance.weekdays.count-1)
         let nextIndex: Int = clamp(DataService.instance.currentIndex + Int(1*sign(percentage)), lower: 0, upper: DataService.instance.weekdays.count-1)
         
         // Reverse equation if percentage is -
-        if percentage != 100 {
+        if abs(percentage) < 100 {
             if sign(percentage) > 0 {
                 parentView.backgroundColor = blendColor(DataService.instance.weekdays[currentIndex].bgColor, secondColor: DataService.instance.weekdays[nextIndex].bgColor, percent: CGFloat(percentage/100))
             } else if sign(percentage) < 0 {
