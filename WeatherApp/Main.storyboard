@@ -153,10 +153,10 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="560" height="54"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23:24" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5w-mW-64J">
-                                                            <rect key="frame" x="8" y="11" width="47" height="32"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5w-mW-64J">
+                                                            <rect key="frame" x="8" y="11" width="90" height="32"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="47" id="b9m-Ir-q4N"/>
+                                                                <constraint firstAttribute="width" constant="90" id="b9m-Ir-q4N"/>
                                                                 <constraint firstAttribute="height" constant="32" id="bjj-Ln-wyn"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>

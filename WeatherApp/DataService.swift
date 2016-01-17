@@ -101,7 +101,7 @@ class DataService {
                 let dayFormatter = NSDateFormatter()
                 let timeFormatter = NSDateFormatter()
                 dayFormatter.dateFormat = "dd"
-                timeFormatter.dateFormat = "HH:mm"
+                timeFormatter.dateFormat = "h:mm a"
                 
                 if let dict = result.value as? Dictionary<String, AnyObject> {
                     
