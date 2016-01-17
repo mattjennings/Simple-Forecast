@@ -56,13 +56,12 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Table view
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("DayForecastCell", forIndexPath: indexPath) as? DayForecastCell {
-            if dataObject.forecasts.count > 0 {
-                let time = dataObject.forecasts[0].time
-                let icon = dataObject.forecasts[0].icon
-                let weather = dataObject.forecasts[0].weatherDescription
-                let temp = dataObject.forecasts[0].temp
+            if dataObject.forecasts.count > 0 {                
+                let time = dataObject.forecasts[indexPath.row].time
+                let icon = dataObject.forecasts[indexPath.row].icon
+                let weather = dataObject.forecasts[indexPath.row].weatherDescription
+                let temp = dataObject.forecasts[indexPath.row].temp
                 
-                print(time)
                 cell.configureCell(time, icon: icon, weatherDesc: weather, temp: temp)
             } else {
                 cell.configureCell("00:00", icon: "sun", weatherDesc: "loading", temp: "0")
@@ -82,7 +81,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return dataObject.forecasts.count
     }
 }
 
