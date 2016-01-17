@@ -29,7 +29,7 @@ class Weekday: Equatable {
     
     var temperature: String {
         set (newVal) {
-            _temperature = newVal
+            _temperature = "\(newVal) °C"
         } get {
             return _temperature   
         }

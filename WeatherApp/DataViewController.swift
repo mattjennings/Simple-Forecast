@@ -43,7 +43,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func updateData() {
         self.dayLabel!.text = dataObject.title
-        self.tempLabel.text = "\(dataObject.temperature) °C"
+        self.tempLabel.text = "\(dataObject.temperature)"
         self.iconImg.image = UIImage(named: dataObject.icon)
         dayForecastTable.reloadData()
     }
@@ -59,12 +59,11 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
             if dataObject.forecasts.count > 0 {                
                 let time = dataObject.forecasts[indexPath.row].time
                 let icon = dataObject.forecasts[indexPath.row].icon
-                let weather = dataObject.forecasts[indexPath.row].weatherDescription
                 let temp = dataObject.forecasts[indexPath.row].temp
                 
-                cell.configureCell(time, icon: icon, weatherDesc: weather, temp: temp)
+                cell.configureCell(time, icon: icon, temp: temp)
             } else {
-                cell.configureCell("00:00", icon: "sun", weatherDesc: "loading", temp: "0")
+                cell.configureCell("00:00", icon: "sun", temp: "0")
             }
             return cell
         } else {

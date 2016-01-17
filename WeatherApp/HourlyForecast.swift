@@ -34,31 +34,7 @@ class HourlyForecast {
         _temp = temp
         _time = time
         _weatherDesc = weatherDescription
-        
-        
-        // get icon name (make this into function later)
-        var v = "sun"
-        switch (icon) {
-        case "01d":
-            v = "sun"
-        case "01n":
-            v = "moon"
-        case "02d", "03d", "03n", "04d", "04n":
-            v = "cloud"
-        case "02n":
-            v = "cloudy_night"
-        case "09d", "09n":
-            v = "rain"
-        case "10d", "10n":
-            v = "heavy_rain"
-        case "11d", "11n":
-            v = "storm"
-        case "13d", "13n":
-            v = "snow"
-        default:
-            v = "sun"
-        }
-        _icon = v
+        _icon = iconNameToImageName(icon)
     }
     
 }

@@ -129,9 +129,24 @@ class DataService {
                                 newTime = hour
                             }
                             
+                            if let main = list["main"] as? Dictionary<String, AnyObject> {
+                                if let temp = main["temp"] as? Double {
+                                    newTemp = "\(Int(temp))"
+                                }
+                            }
+                            
+                            if let weather = list["weather"] as? [AnyObject] {
+                                if let icon = weather[0]["icon"] as? String {
+                                    newIcon = icon
+                                }
+                                
+                                if let description = weather[0]["description"] as? String {
+                                    newWeatherDesc = description
+                                }
+                            }
+                            
                             newForecast = HourlyForecast(time: newTime, icon: newIcon, weatherDescription: newWeatherDesc, temp: newTemp)
                             self.weekdays[indexToSet].forecasts += [newForecast]
-                            print("saving to \(indexToSet) - \(newForecast.time)")
                         }
                         
                     }

@@ -44,6 +44,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         pageData = DataService.instance.weekdays
     }
 
+
     func viewControllerAtIndex(index: Int, storyboard: UIStoryboard) -> DataViewController? {
         // Return the data view controller for the given index.
         if (self.pageData.count == 0) || (index >= self.pageData.count) {

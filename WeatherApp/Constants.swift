@@ -29,6 +29,31 @@ func getDayOfMonth() -> Int? {
     return (Int(dayOfMonthString))
 }
 
+func iconNameToImageName(name: String) -> String {
+    var v = ""
+    switch (name) {
+    case "01d":
+        v = "sun"
+    case "01n":
+        v = "moon"
+    case "02d", "03d", "03n", "04d", "04n":
+        v = "cloud"
+    case "02n":
+        v = "cloudy_night"
+    case "09d", "09n":
+        v = "rain"
+    case "10d", "10n":
+        v = "heavy_rain"
+    case "11d", "11n":
+        v = "storm"
+    case "13d", "13n":
+        v = "snow"
+    default:
+        v = "sun"
+    }
+    return v
+}
+
 extension Array {
     
     //Stack - LIFO

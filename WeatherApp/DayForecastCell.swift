@@ -10,20 +10,19 @@ import UIKit
 
 class DayForecastCell: UITableViewCell {
 
-    @IBOutlet weak var weatherLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
     @IBOutlet weak var tempLbl: UILabel!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
     }
     
-    func configureCell(time: String, icon: String, weatherDesc: String, temp: String) {
+    func configureCell(time: String, icon: String, temp: String) {
         timeLbl.text = time
-        iconImg.image = UIImage(named: "sun")
-        weatherLbl.text = weatherDesc
-        tempLbl.text = temp        
+        iconImg.image = UIImage(named: icon)
+        tempLbl.text = "\(temp) °C"
     }
 
 }
