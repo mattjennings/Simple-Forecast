@@ -17,7 +17,7 @@ class Weekday: Equatable {
     private var _temperature: String!
     private var _icon: String!
     
-    private var _forecast: [HourlyForecast]!
+    var forecasts = [HourlyForecast]()
     
     var title: String {
         return _title
@@ -63,14 +63,6 @@ class Weekday: Equatable {
             return _icon
         }
     }
-    
-    var forecast: [HourlyForecast] {
-        set (newVal) {
-            _forecast = newVal
-        } get {
-            return _forecast
-        }
-    }
 
     
     init(bgColor: UIColor, title: String) {
@@ -78,7 +70,7 @@ class Weekday: Equatable {
         _title = title
         _temperature = "0"
         _icon = "13d"
-        _forecast = [HourlyForecast]()
+        //forecasts = [HourlyForecast]()
     }
     
 }

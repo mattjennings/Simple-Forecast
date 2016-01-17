@@ -43,13 +43,6 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         
         pageData = DataService.instance.weekdays
     }
-    
-    func getDayOfWeek() -> Int? {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "e"
-        let dayOfWeekString = dateFormatter.stringFromDate(NSDate())
-        return (Int(dayOfWeekString))
-    }
 
     func viewControllerAtIndex(index: Int, storyboard: UIStoryboard) -> DataViewController? {
         // Return the data view controller for the given index.

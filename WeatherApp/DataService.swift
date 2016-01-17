@@ -97,6 +97,7 @@ class DataService {
                 
                 let result = response.result
                 
+                let currentDay = getDayOfMonth()
                 let dayFormatter = NSDateFormatter()
                 let timeFormatter = NSDateFormatter()
                 dayFormatter.dateFormat = "dd"
@@ -106,18 +107,36 @@ class DataService {
                     
                     if let lists = dict["list"] as? [AnyObject] {
                         
-                        var i = 0 // index
                         for list in lists {
-                            //print(list["dt"])
+                            
+                            var indexToSet = 0
+                            
+                            var newTime = "00:00"
+                            var newIcon = "01n"
+                            var newTemp = "-60"
+                            var newWeatherDesc = "CLOUDS"
+                            var newForecast: HourlyForecast!
+                            
+                            // Get date and time
                             if let dateInt = list["dt"] as? Int {
                                 var date = NSDate(timeIntervalSince1970: NSTimeInterval(dateInt))
                                 let day = dayFormatter.stringFromDate(date)
                                 let hour = timeFormatter.stringFromDate(date)
-                                print("Day: \(day) Hour: \(hour)")
+                                
+                                // Index to assign the forecast to
+                                indexToSet = Int(day)! - currentDay!
+                                
+                                newTime = hour
                             }
+                            
+                            newForecast = HourlyForecast(time: newTime, icon: newIcon, weatherDescription: newWeatherDesc, temp: newTemp)
+                            self.weekdays[indexToSet].forecasts += [newForecast]
+                            print("saving to \(indexToSet) - \(newForecast.time)")
                         }
+                        
                     }
                 }
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedForecast", object: nil));                
                 completed()
         }
     }

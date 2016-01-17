@@ -11,15 +11,19 @@ import UIKit
 class DayForecastCell: UITableViewCell {
 
     @IBOutlet weak var weatherLbl: UILabel!
-    private var _weatherDescription: String!
+    @IBOutlet weak var timeLbl: UILabel!
+    @IBOutlet weak var iconImg: UIImageView!
+    @IBOutlet weak var tempLbl: UILabel!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        //layer.cornerRadius = 5.0
     }
     
-    func configureCell() {
+    func configureCell(time: String, icon: String, weatherDesc: String, temp: String) {
+        timeLbl.text = time
+        iconImg.image = UIImage(named: "sun")
+        weatherLbl.text = weatherDesc
+        tempLbl.text = temp        
     }
 
 }

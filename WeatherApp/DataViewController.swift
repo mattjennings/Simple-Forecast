@@ -24,6 +24,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         self.view.backgroundColor = UIColor.clearColor()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateWeekday:", name: "onReceivedWeather", object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateForecast:", name: "onReceivedForecast", object: nil);
         
         dayForecastTable.delegate = self
         dayForecastTable.dataSource = self
@@ -33,6 +34,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         updateData()
+        
     }
     
     func updateWeekday(notif: AnyObject) {
@@ -43,13 +45,28 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.dayLabel!.text = dataObject.title
         self.tempLabel.text = "\(dataObject.temperature) °C"
         self.iconImg.image = UIImage(named: dataObject.icon)
+        dayForecastTable.reloadData()
+    }
+    
+    func updateForecast(notif: AnyObject) {
+        dayForecastTable.reloadData()        
     }
     
     
     // Table view
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("DayForecastCell", forIndexPath: indexPath) as? DayForecastCell {
-            cell.alpha = 0
+            if dataObject.forecasts.count > 0 {
+                let time = dataObject.forecasts[0].time
+                let icon = dataObject.forecasts[0].icon
+                let weather = dataObject.forecasts[0].weatherDescription
+                let temp = dataObject.forecasts[0].temp
+                
+                print(time)
+                cell.configureCell(time, icon: icon, weatherDesc: weather, temp: temp)
+            } else {
+                cell.configureCell("00:00", icon: "sun", weatherDesc: "loading", temp: "0")
+            }
             return cell
         } else {
             return UITableViewCell()

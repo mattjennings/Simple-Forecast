@@ -15,6 +15,20 @@ let URL_BASE = "http://api.openweathermap.org/data/2.5/"
 typealias DownloadComplete = () -> ()
 
 
+func getDayOfWeek() -> Int? {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "e"
+    let dayOfWeekString = dateFormatter.stringFromDate(NSDate())
+    return (Int(dayOfWeekString))
+}
+
+func getDayOfMonth() -> Int? {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "dd"
+    let dayOfMonthString = dateFormatter.stringFromDate(NSDate())
+    return (Int(dayOfMonthString))
+}
+
 extension Array {
     
     //Stack - LIFO
