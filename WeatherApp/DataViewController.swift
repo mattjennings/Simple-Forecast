@@ -41,7 +41,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func updateData() {
         self.dayLabel!.text = dataObject.title
-        self.tempLabel.text = dataObject.temperature
+        self.tempLabel.text = "\(dataObject.temperature) °C"
         self.iconImg.image = UIImage(named: dataObject.icon)
     }
     
@@ -74,8 +74,8 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         for cell in dayForecastTable.visibleCells as! [DayForecastCell] {
             var point = dayForecastTable.convertPoint(cell.center, toView: dayForecastTable.superview)
             //print(dayForecastTable.bounds.maxY)
-            cell.alpha = ((point.y * 100) / dayForecastTable.bounds.maxY) / 100
-            cell.weatherLbl.text = "\(cell.alpha)"
+            //cell.alpha = ((point.y * 100) / dayForecastTable.bounds.maxY) / 100
+            //cell.weatherLbl.text = "\(cell.alpha)"
         }
     }
 }
