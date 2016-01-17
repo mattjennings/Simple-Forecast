@@ -27,10 +27,26 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         super.init()
         // Create the data model.
         pageData = DataService.instance.weekdays
+
+        // Re-organize Weekdays so that the current day is index 0
+        if let dayOfWeek = getDayOfWeek() {
+            for index in 1...dayOfWeek-1 {
+                //print("moving \(DataService.instance.weekdays[index].title)")
+                DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
+                //print("new day: \(DataService.instance.weekdays[0].title)")
+            }
+        }
         
         DataService.instance.getForecast { () -> () in
             print("complete")
         }
+    }
+    
+    func getDayOfWeek() -> Int? {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "e"
+        let dayOfWeekString = dateFormatter.stringFromDate(NSDate())
+        return (Int(dayOfWeekString))
     }
 
     func viewControllerAtIndex(index: Int, storyboard: UIStoryboard) -> DataViewController? {

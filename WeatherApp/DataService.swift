@@ -27,7 +27,11 @@ class DataService {
     ]
     
     var weekdays: [Weekday] {
-        return _weekdays
+        set(newValue) {
+            _weekdays = newValue
+        } get {
+            return _weekdays
+        }
     }
     
     var currentIndex: Int {
@@ -39,14 +43,12 @@ class DataService {
     }
     
     func getForecast(completed: DownloadComplete) {
-        
         // forecast/daily?q= gets the 16 day forecast so we can restrict it to 7 results
         // forecast?q= gets the 5 day forecast in 3 hour intervals
         
+        // Get the temperature for the week
         Alamofire.request(.GET, "\(URL_BASE)forecast/daily?q=Brandon,ca&mode=json&cnt=7&units=metric&APPID=\(API_KEY)")
             .responseJSON { response in
-                print(response.request)  // original URL request
-                
                 let result = response.result
                 
                 if let dict = result.value as? Dictionary<String, AnyObject> {
@@ -62,29 +64,41 @@ class DataService {
                         for list in lists {
                             if let day = list as? Dictionary<String, AnyObject> {
                                 
-                                if let main = day["main"] as? Dictionary<String, AnyObject> {
-                                    // Temperature
-                                    if let temp = main["temp"] as? Double {
-                                        self.weekdays[i].temperature = "\(temp)"
+                                // Temperature
+                                if let temp = day["temp"] as? Dictionary<String, AnyObject> {
+                                    if let dayTemp = temp["day"] as? Double {
+                                        self.weekdays[i].temperature = "\(Int(dayTemp))"
                                     }
+                                }
+                                
+                                // Weather icon
+                                if let weather = day["weather"] as? [AnyObject] {
                                     
-                                    if let tempMin = main["temp_min"] as? Double {
-                                        self.weekdays[i].temperatureMin = "\(tempMin)"
-                                    }
-                                    
-                                    if let tempMax = main["temp_max"] as? Double {
-                                        self.weekdays[i].temperatureMax = "\(tempMax)"
+                                    if let icon = weather[0]["icon"] as? String {
+                                        self.weekdays[i].icon = icon
                                     }
                                 }
                             }
+                            
                             i++
                         }
                     }
                 }
-                
 
                 NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedWeather", object: nil));
                 completed()
         }
+        
+        
+        // Get the 5 day forecast with 3 hour intervals
+        Alamofire.request(.GET, "\(URL_BASE)forecast/daily?q=Brandon,ca&mode=json&cnt=7&units=metric&APPID=\(API_KEY)")
+            .responseJSON { response in
+                
+                
+                completed()
+        }
     }
 }
+
+
+

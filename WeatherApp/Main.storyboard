@@ -239,6 +239,8 @@
                     <connections>
                         <outlet property="dayForecastTable" destination="tld-a2-HG9" id="Rev-dH-TKI"/>
                         <outlet property="dayLabel" destination="cF2-Le-7mQ" id="HGF-Ml-yeC"/>
+                        <outlet property="iconImg" destination="QnL-Zr-eN7" id="Ael-Kb-HEH"/>
+                        <outlet property="tempLabel" destination="3GE-Sx-ERk" id="PfJ-xm-gVk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>

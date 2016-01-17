@@ -15,8 +15,7 @@ class Weekday: Equatable {
     private var _title: String!
     
     private var _temperature: String!
-    private var _temperatureMin: String!
-    private var _temperatureMax: String!
+    private var _icon: String!
     
     var title: String {
         return _title
@@ -33,29 +32,42 @@ class Weekday: Equatable {
             return _temperature   
         }
     }
-    
-    var temperatureMax: String {
+
+    var icon: String {
         set (newVal) {
-            _temperatureMax = newVal
+            var v = "01d"
+            switch (newVal) {
+                case "01d":
+                    v = "sun"
+                case "01n":
+                    v = "moon"
+                case "02d", "03d", "03n", "04d", "04n":
+                    v = "cloud"
+                case "02n":
+                    v = "cloudy_night"
+                case "09d", "09n":
+                    v = "rain"
+                case "10d", "10n":
+                    v = "heavy_rain"
+                case "11d", "11n":
+                    v = "storm"
+                case "13d", "13n":
+                    v = "snow"
+                default:
+                    v = "sun"
+            }
+            _icon = v
         } get {
-            return _temperatureMax
+            return _icon
         }
     }
-    
-    var temperatureMin: String {
-        set (newVal) {
-            _temperatureMin = newVal
-        } get {
-            return _temperatureMin
-        }
-    }
+
     
     init(bgColor: UIColor, title: String) {
         _bgColor = bgColor
         _title = title
         _temperature = "0"
-        _temperatureMax = "0"
-        _temperatureMin = "0"
+        _icon = "13d"
     }
     /*
     init() {

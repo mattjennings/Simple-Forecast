@@ -11,6 +11,7 @@ import UIKit
 class DataViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
     @IBOutlet weak var dayForecastTable: UITableView!
     
@@ -29,16 +30,10 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         dayForecastTable.backgroundColor = UIColor.clearColor()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.dayLabel!.text = dataObject.title
         updateData()
-//        iconImg.image = invertImage(iconImg.image!)
     }
     
     func updateWeekday(notif: AnyObject) {
@@ -46,7 +41,8 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateData() {
-        
+        self.tempLabel.text = dataObject.temperature
+        self.iconImg.image = UIImage(named: dataObject.icon)
     }
     
     

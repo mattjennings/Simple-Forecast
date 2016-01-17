@@ -112,8 +112,4 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
 }
 
 
-extension UIColor {
-    var coreImageColor: CoreImage.CIColor? {
-        return CoreImage.CIColor(color: self)  // The resulting Core Image color, or nil
-    }
-}
+
