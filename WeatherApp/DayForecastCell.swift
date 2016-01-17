@@ -10,6 +10,9 @@ import UIKit
 
 class DayForecastCell: UITableViewCell {
 
+    @IBOutlet weak var weatherLbl: UILabel!
+    private var _weatherDescription: String!
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         

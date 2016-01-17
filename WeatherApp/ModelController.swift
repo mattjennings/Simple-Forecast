@@ -25,8 +25,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
 
     override init() {
         super.init()
-        // Create the data model.
-        pageData = DataService.instance.weekdays
+        // Create the data model
 
         // Re-organize Weekdays so that the current day is index 0
         if let dayOfWeek = getDayOfWeek() {
@@ -40,6 +39,8 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         DataService.instance.getForecast { () -> () in
             print("complete")
         }
+        
+        pageData = DataService.instance.weekdays
     }
     
     func getDayOfWeek() -> Int? {

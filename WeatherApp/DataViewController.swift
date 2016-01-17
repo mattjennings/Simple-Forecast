@@ -32,7 +32,6 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.dayLabel!.text = dataObject.title
         updateData()
     }
     
@@ -41,6 +40,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateData() {
+        self.dayLabel!.text = dataObject.title
         self.tempLabel.text = dataObject.temperature
         self.iconImg.image = UIImage(named: dataObject.icon)
     }
@@ -49,7 +49,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Table view
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("DayForecastCell", forIndexPath: indexPath) as? DayForecastCell {
-            
+            cell.alpha = 0
             return cell
         } else {
             return UITableViewCell()
@@ -66,6 +66,17 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
+    }
+    
+    // TODO: find the correct value for maxY so that alpha returns 0-1
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        print(dayForecastTable.visibleCells.count)
+        for cell in dayForecastTable.visibleCells as! [DayForecastCell] {
+            var point = dayForecastTable.convertPoint(cell.center, toView: dayForecastTable.superview)
+            //print(dayForecastTable.bounds.maxY)
+            cell.alpha = ((point.y * 100) / dayForecastTable.bounds.maxY) / 100
+            cell.weatherLbl.text = "\(cell.alpha)"
+        }
     }
 }
 

@@ -110,16 +110,16 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="g2F-Rg-6Wx">
-                                <rect key="frame" x="20" y="20" width="560" height="516"/>
+                                <rect key="frame" x="20" y="52" width="560" height="484"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="Lrx-pv-nHE">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="258"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="242"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Z1g-N4-hH6">
-                                                <rect key="frame" x="0.0" y="0.0" width="560" height="258"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="560" height="242"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sun" translatesAutoresizingMaskIntoConstraints="NO" id="QnL-Zr-eN7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="560" height="129"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="560" height="121"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="75" id="SiP-ZG-spw"/>
                                                             <constraint firstAttribute="height" constant="75" id="faA-3U-3z4"/>
@@ -132,7 +132,7 @@
                                                         </variation>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-21°C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="3GE-Sx-ERk">
-                                                        <rect key="frame" x="0.0" y="129" width="560" height="129"/>
+                                                        <rect key="frame" x="0.0" y="121" width="560" height="121"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="60"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -142,7 +142,7 @@
                                         </subviews>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="54" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tld-a2-HG9">
-                                        <rect key="frame" x="0.0" y="258" width="560" height="258"/>
+                                        <rect key="frame" x="0.0" y="242" width="560" height="242"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
@@ -210,6 +210,9 @@
                                                     </variation>
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" red="0.26977370690000002" green="0.47843137250000001" blue="0.69832974140000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                <connections>
+                                                    <outlet property="weatherLbl" destination="ZGd-8v-YJV" id="RQo-nf-8Yw"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
@@ -224,16 +227,26 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9k7-7A-Oxa">
+                                <rect key="frame" x="8" y="536" width="584" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="laP-AB-oCH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.26977370690000002" green="0.47843137250000001" blue="0.69832974140000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="g2F-Rg-6Wx" firstAttribute="top" secondItem="fXf-Jd-eTc" secondAttribute="bottom" id="2wl-r2-1Jy"/>
+                            <constraint firstItem="g2F-Rg-6Wx" firstAttribute="top" secondItem="fXf-Jd-eTc" secondAttribute="bottom" constant="32" id="2wl-r2-1Jy"/>
+                            <constraint firstItem="9k7-7A-Oxa" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="8" id="7RX-c9-fCJ"/>
                             <constraint firstItem="EPS-s9-h4K" firstAttribute="top" secondItem="cF2-Le-7mQ" secondAttribute="bottom" constant="16" id="EVz-uk-Lk3"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="WiA-VA-1FD"/>
                             <constraint firstItem="g2F-Rg-6Wx" firstAttribute="trailing" secondItem="ZwX-cT-FIQ" secondAttribute="trailingMargin" id="a0c-mB-QSP"/>
                             <constraint firstItem="g2F-Rg-6Wx" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="f20-kE-Z27"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="top" secondItem="g2F-Rg-6Wx" secondAttribute="bottom" constant="16" id="iIF-En-007"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="trailing" secondItem="ZwX-cT-FIQ" secondAttribute="trailingMargin" id="jJ6-i5-2id"/>
+                            <constraint firstAttribute="trailing" secondItem="9k7-7A-Oxa" secondAttribute="trailing" constant="8" id="wd4-3l-gQ4"/>
+                            <constraint firstItem="9k7-7A-Oxa" firstAttribute="top" secondItem="g2F-Rg-6Wx" secondAttribute="bottom" id="zd5-26-rlT"/>
                         </constraints>
                     </view>
                     <connections>
