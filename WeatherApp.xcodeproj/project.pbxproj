@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6DE56BCB70E8D5DF1D161B31 /* Pods_WeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96BC99C030A11DCBB0B497F6 /* Pods_WeatherApp.framework */; };
+		C23F1EEA1C4C12DF003FAAC0 /* HourlyForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23F1EE91C4C12DF003FAAC0 /* HourlyForecast.swift */; };
 		C2B786C11C44A4130077DFDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786C01C44A4130077DFDE /* AppDelegate.swift */; };
 		C2B786C31C44A4130077DFDE /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786C21C44A4130077DFDE /* RootViewController.swift */; };
 		C2B786C51C44A4130077DFDE /* DataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B786C41C44A4130077DFDE /* DataViewController.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		52CBB8A2DD46B0A6C965C07B /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		96BC99C030A11DCBB0B497F6 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C23F1EE91C4C12DF003FAAC0 /* HourlyForecast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyForecast.swift; sourceTree = "<group>"; };
 		C2B786BD1C44A4130077DFDE /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2B786C01C44A4130077DFDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2B786C21C44A4130077DFDE /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				C2B786DA1C45EE180077DFDE /* Weekday.swift */,
+				C23F1EE91C4C12DF003FAAC0 /* HourlyForecast.swift */,
 				C2B786DF1C45F4130077DFDE /* DataService.swift */,
 				C2B786FF1C4894D70077DFDE /* Constants.swift */,
 			);
@@ -267,6 +270,7 @@
 				C2B786C71C44A4130077DFDE /* ModelController.swift in Sources */,
 				C2B786C51C44A4130077DFDE /* DataViewController.swift in Sources */,
 				C2B787021C49DFE50077DFDE /* README.md in Sources */,
+				C23F1EEA1C4C12DF003FAAC0 /* HourlyForecast.swift in Sources */,
 				C2B786C11C44A4130077DFDE /* AppDelegate.swift in Sources */,
 				C2B787001C4894D70077DFDE /* Constants.swift in Sources */,
 			);

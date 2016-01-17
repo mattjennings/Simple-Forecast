@@ -27,7 +27,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         dayForecastTable.delegate = self
         dayForecastTable.dataSource = self
-        dayForecastTable.backgroundColor = UIColor.clearColor()
+        dayForecastTable.backgroundColor = UIColor.clearColor()        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -65,18 +65,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    // TODO: find the correct value for maxY so that alpha returns 0-1
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        print(dayForecastTable.visibleCells.count)
-        for cell in dayForecastTable.visibleCells as! [DayForecastCell] {
-            var point = dayForecastTable.convertPoint(cell.center, toView: dayForecastTable.superview)
-            //print(dayForecastTable.bounds.maxY)
-            //cell.alpha = ((point.y * 100) / dayForecastTable.bounds.maxY) / 100
-            //cell.weatherLbl.text = "\(cell.alpha)"
-        }
+        return 10
     }
 }
 

@@ -15,7 +15,6 @@ let URL_BASE = "http://api.openweathermap.org/data/2.5/"
 typealias DownloadComplete = () -> ()
 
 
-
 extension Array {
     
     //Stack - LIFO
@@ -48,5 +47,12 @@ extension Array {
 extension UIColor {
     var coreImageColor: CoreImage.CIColor? {
         return CoreImage.CIColor(color: self)  // The resulting Core Image color, or nil
+    }
+    
+    func adjust(red: CGFloat, green: CGFloat, blue: CGFloat, alpha:CGFloat) -> UIColor{
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        var w: CGFloat = 0
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)
     }
 }

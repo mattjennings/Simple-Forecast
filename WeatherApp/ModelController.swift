@@ -29,10 +29,11 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
 
         // Re-organize Weekdays so that the current day is index 0
         if let dayOfWeek = getDayOfWeek() {
-            for index in 1...dayOfWeek-1 {
-                //print("moving \(DataService.instance.weekdays[index].title)")
-                DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
-                //print("new day: \(DataService.instance.weekdays[0].title)")
+            // if it's sunday, don't dequeue the array
+            if (dayOfWeek != 1) {
+                for index in 1...dayOfWeek-1 {
+                    DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
+                }
             }
         }
         

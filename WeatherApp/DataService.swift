@@ -91,10 +91,33 @@ class DataService {
         
         
         // Get the 5 day forecast with 3 hour intervals
-        Alamofire.request(.GET, "\(URL_BASE)forecast/daily?q=Brandon,ca&mode=json&cnt=7&units=metric&APPID=\(API_KEY)")
+        
+        Alamofire.request(.GET, "\(URL_BASE)forecast/?q=Brandon,ca&mode=json&units=metric&APPID=\(API_KEY)")
             .responseJSON { response in
                 
+                let result = response.result
                 
+                let dayFormatter = NSDateFormatter()
+                let timeFormatter = NSDateFormatter()
+                dayFormatter.dateFormat = "dd"
+                timeFormatter.dateFormat = "HH:mm"
+                
+                if let dict = result.value as? Dictionary<String, AnyObject> {
+                    
+                    if let lists = dict["list"] as? [AnyObject] {
+                        
+                        var i = 0 // index
+                        for list in lists {
+                            //print(list["dt"])
+                            if let dateInt = list["dt"] as? Int {
+                                var date = NSDate(timeIntervalSince1970: NSTimeInterval(dateInt))
+                                let day = dayFormatter.stringFromDate(date)
+                                let hour = timeFormatter.stringFromDate(date)
+                                print("Day: \(day) Hour: \(hour)")
+                            }
+                        }
+                    }
+                }
                 completed()
         }
     }
