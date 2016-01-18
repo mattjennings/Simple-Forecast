@@ -38,29 +38,29 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
     func updateData() {
         
         // Re-organize Weekdays so that the current day is index 0
-        if let dayOfWeek = getDayOfWeek() {
+        if let dayOfWeek = getDayOfWeek() {            
             // if it's sunday, don't dequeue the array
-            if (dayOfWeek != 1) {
+            if (dayOfWeek-1 != 0) {
                 
                 // Reorganize order so that [0] is Sunday
                 if (DataService.instance.weekdays[0].title != "Sunday") {
                     let curDay = weekdayToInt(DataService.instance.weekdays[0].title)
                     let timesToLoop = DataService.instance.weekdays.count - curDay
                     
-                    for index in 0..<timesToLoop {
+                    for _ in 0..<timesToLoop {
                         DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
                     }
-                    
-                    // Let WeatherPageVC know we're reorganizing the data
-                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedReload", object: nil));
                 }
                 
                 if (DataService.instance.weekdays[0].title == "Sunday") {
                     // dequeue the array if the first day of the week is Sunday (i.e, initial load and not a refresh)
-                    for index in 1...dayOfWeek-1 {
+                    for _ in 1...dayOfWeek-1 {
                         DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
-                    }
+                    }                     
                 }
+                                
+                // Let WeatherPageVC know we're reorganizing the data
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedReload", object: nil));
             }
         }
         
@@ -68,8 +68,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
             
         }
         
-        pageData = DataService.instance.weekdays
-        
+        pageData = DataService.instance.weekdays        
     }
     
     func weekdayToInt(day: String) -> Int {
@@ -102,7 +101,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         
         // Create a new view controller and pass suitable data.
         let dataViewController = storyboard.instantiateViewControllerWithIdentifier("DataViewController") as! DataViewController
-        dataViewController.dataObject = self.pageData[index]
+        dataViewController.dataObject = self.pageData[index]        
         return dataViewController
     }
 

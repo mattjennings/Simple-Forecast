@@ -27,6 +27,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.view.backgroundColor = UIColor.clearColor()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateWeekday:", name: "onReceivedWeather", object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateForecast:", name: "onReceivedForecast", object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAll:", name: "onReceivedReload", object: nil);
         
         dayForecastTable.delegate = self
         dayForecastTable.dataSource = self
@@ -54,6 +55,10 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func updateForecast(notif: AnyObject) {
         dayForecastTable.reloadData()        
+    }
+    
+    func updateAll(notif: AnyObject) {
+        updateData()
     }
     
     
