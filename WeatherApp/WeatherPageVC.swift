@@ -15,6 +15,11 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     var parentView: UIView!
     var viewWidth: CGFloat!
     
+    var scrollPercentage: CGFloat = 0
+    var currentIndex: Int = 0
+    var nextIndex: Int = 0
+    var scrollDirection: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +30,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
             }
         }
         
+        self.delegate = self
         viewWidth = self.view.bounds.width
         
         // If DataService.instance.weekdays was updated/rearranged
@@ -54,37 +60,50 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
             }
         }
     }
+    
+    
+    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+        if sign(scrollPercentage) > 0 && currentIndex < DataService.instance.weekdays.count-1 {
+            nextIndex = currentIndex + 1
+        } else if sign(scrollPercentage) < 0 && currentIndex > 0 {
+            nextIndex = currentIndex - 1
+        }        
+    }
+    
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        
+        if let dvc = self.viewControllers as? [DataViewController] {
+            let actualIndex = rootViewController.modelController.indexOfViewController(dvc[0])
+            currentIndex = actualIndex
+        }
+    }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         let sx: CGFloat = CGFloat(scrollView.contentOffset.x)
-        var percentage: CGFloat = 0.0
-        
         // Percentage of view scrolled
         if sx > 0.0 && sx < viewWidth {
-            percentage = (sx / viewWidth) * CGFloat(-100)
+            scrollPercentage = (sx / viewWidth) * CGFloat(-100)
         } else if sx > viewWidth && sx < viewWidth * 2 {
-            percentage = ((viewWidth - sx) / viewWidth) * -100
+            scrollPercentage = ((viewWidth - sx) / viewWidth) * -100
         } else {
             if sx == 0.0 {
-                percentage = -100
+                scrollPercentage = -100
             } else if sx == viewWidth * 2 {
-                percentage = 100
+                scrollPercentage = 100
             }
         }
         
-        // Indexes
-        let currentIndex: Int = clamp(DataService.instance.currentIndex, lower: 0, upper: DataService.instance.weekdays.count-1)
-        let nextIndex: Int = clamp(DataService.instance.currentIndex + Int(1*sign(percentage)), lower: 0, upper: DataService.instance.weekdays.count-1)
-                
         // Reverse equation if percentage is -
-        if abs(percentage) < 100 {
-            if sign(percentage) > 0 {
-                parentView.backgroundColor = blendColor(DataService.instance.weekdays[currentIndex].bgColor, secondColor: DataService.instance.weekdays[nextIndex].bgColor, percent: CGFloat(percentage/100))
-            } else if sign(percentage) < 0 {
-                parentView.backgroundColor = blendColor(DataService.instance.weekdays[nextIndex].bgColor, secondColor: DataService.instance.weekdays[currentIndex].bgColor, percent: CGFloat(percentage/100))
+        if abs(scrollPercentage) > 0 && abs(scrollPercentage) < 100 {
+            if sign(scrollPercentage) > 0 {
+                parentView.backgroundColor = blendColor(DataService.instance.weekdays[currentIndex].bgColor, secondColor: DataService.instance.weekdays[nextIndex].bgColor, percent: CGFloat(scrollPercentage/100))
+            } else if sign(scrollPercentage) < 0 {
+                parentView.backgroundColor = blendColor(DataService.instance.weekdays[nextIndex].bgColor, secondColor: DataService.instance.weekdays[currentIndex].bgColor, percent: CGFloat(scrollPercentage/100))
             }
         }
+        
+        
     }
     
     func blendColor(firstColor: UIColor, secondColor: UIColor, percent: CGFloat) -> UIColor {

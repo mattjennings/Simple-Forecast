@@ -29,6 +29,7 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         self.pageViewController!.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: {done in })
         
         self.pageViewController!.dataSource = self.modelController
+        //self.pageViewController!.delegate = self
         
         self.addChildViewController(self.pageViewController!)
         self.view.addSubview(self.pageViewController!.view)
@@ -62,8 +63,6 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     override func viewDidAppear(animated: Bool) {
 
     }
-    
-
     
     var modelController: ModelController {
         // Return the model controller object, creating it if necessary.

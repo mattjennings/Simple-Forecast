@@ -36,8 +36,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        updateData()
-        
+        updateData()        
     }
     
     func updateWeekday(notif: AnyObject) {
