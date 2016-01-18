@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="703-4V-yAM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10089" systemVersion="15E27e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="703-4V-yAM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10072.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -209,14 +209,28 @@
                                     </tableView>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Monday" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cF2-Le-7mQ">
-                                <rect key="frame" x="20" y="558" width="560" height="33.5"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Monday" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cF2-Le-7mQ">
+                                <rect key="frame" x="246" y="552" width="107" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Le4-KG-hfP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="28"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Jan 26" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="UEP-hp-2yt">
+                                <rect key="frame" x="20" y="554" width="60.5" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="804-cX-JAu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="804-cX-JAu"/>
+                                    </mask>
+                                </variation>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9k7-7A-Oxa">
                                 <rect key="frame" x="8" y="536" width="584" height="1"/>
@@ -225,26 +239,59 @@
                                     <constraint firstAttribute="height" constant="1" id="laP-AB-oCH"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="2016" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eBR-7h-QtJ">
+                                <rect key="frame" x="535.5" y="554" width="44.5" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="Hfr-fe-guX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Hfr-fe-guX"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.26977370690000002" green="0.47843137250000001" blue="0.69832974140000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="eBR-7h-QtJ" secondAttribute="trailing" id="0MB-1X-kp2"/>
+                            <constraint firstItem="cF2-Le-7mQ" firstAttribute="height" secondItem="UEP-hp-2yt" secondAttribute="height" id="0Rw-3a-dFY"/>
                             <constraint firstItem="g2F-Rg-6Wx" firstAttribute="top" secondItem="fXf-Jd-eTc" secondAttribute="bottom" constant="32" id="2wl-r2-1Jy"/>
                             <constraint firstItem="9k7-7A-Oxa" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="8" id="7RX-c9-fCJ"/>
+                            <constraint firstItem="eBR-7h-QtJ" firstAttribute="height" secondItem="cF2-Le-7mQ" secondAttribute="height" id="9y0-1q-dYR"/>
                             <constraint firstItem="EPS-s9-h4K" firstAttribute="top" secondItem="cF2-Le-7mQ" secondAttribute="bottom" constant="16" id="EVz-uk-Lk3"/>
+                            <constraint firstItem="cF2-Le-7mQ" firstAttribute="centerX" secondItem="ZwX-cT-FIQ" secondAttribute="centerX" id="QWh-et-Tnj"/>
+                            <constraint firstItem="eBR-7h-QtJ" firstAttribute="centerY" secondItem="cF2-Le-7mQ" secondAttribute="centerY" constant="2" id="R7b-tp-d61"/>
+                            <constraint firstItem="UEP-hp-2yt" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="Ugm-j6-0IN"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="WiA-VA-1FD"/>
                             <constraint firstItem="g2F-Rg-6Wx" firstAttribute="trailing" secondItem="ZwX-cT-FIQ" secondAttribute="trailingMargin" id="a0c-mB-QSP"/>
                             <constraint firstItem="g2F-Rg-6Wx" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="f20-kE-Z27"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="top" secondItem="g2F-Rg-6Wx" secondAttribute="bottom" constant="16" id="iIF-En-007"/>
+                            <constraint firstAttribute="trailing" secondItem="UEP-hp-2yt" secondAttribute="trailing" constant="8" id="ivK-Qk-O83"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="trailing" secondItem="ZwX-cT-FIQ" secondAttribute="trailingMargin" id="jJ6-i5-2id"/>
                             <constraint firstAttribute="trailing" secondItem="9k7-7A-Oxa" secondAttribute="trailing" constant="8" id="wd4-3l-gQ4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eBR-7h-QtJ" secondAttribute="trailing" id="xJk-hQ-fiF"/>
+                            <constraint firstItem="UEP-hp-2yt" firstAttribute="centerY" secondItem="cF2-Le-7mQ" secondAttribute="centerY" constant="2" id="yDL-qW-0Rq"/>
                             <constraint firstItem="9k7-7A-Oxa" firstAttribute="top" secondItem="g2F-Rg-6Wx" secondAttribute="bottom" id="zd5-26-rlT"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ivK-Qk-O83"/>
+                                <exclude reference="WiA-VA-1FD"/>
+                                <exclude reference="jJ6-i5-2id"/>
+                                <exclude reference="0MB-1X-kp2"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="dateLabel" destination="UEP-hp-2yt" id="EO7-mx-tYO"/>
                         <outlet property="dayForecastTable" destination="tld-a2-HG9" id="Rev-dH-TKI"/>
                         <outlet property="dayLabel" destination="cF2-Le-7mQ" id="HGF-Ml-yeC"/>
                         <outlet property="iconImg" destination="QnL-Zr-eN7" id="Ael-Kb-HEH"/>
                         <outlet property="tempLabel" destination="3GE-Sx-ERk" id="PfJ-xm-gVk"/>
+                        <outlet property="yearLabel" destination="eBR-7h-QtJ" id="Hmz-oZ-CqP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>

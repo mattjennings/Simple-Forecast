@@ -14,6 +14,8 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
     @IBOutlet weak var dayForecastTable: UITableView!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
     
     var dataObject: Weekday!
     var bgColor: UIColor!
@@ -45,6 +47,8 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.dayLabel!.text = dataObject.title
         self.tempLabel.text = "\(dataObject.temperature)"
         self.iconImg.image = UIImage(named: dataObject.icon)
+        self.dateLabel.text = dataObject.date
+        self.yearLabel.text = dataObject.year
         dayForecastTable.reloadData()
     }
     

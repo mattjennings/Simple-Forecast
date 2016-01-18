@@ -11,6 +11,7 @@ import UIKit
 
 class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrollViewDelegate {
 
+    var rootViewController: RootViewController!
     var parentView: UIView!
     var viewWidth: CGFloat!
     
@@ -25,12 +26,15 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         }
         
         viewWidth = self.view.bounds.width
+        
+        // If DataService.instance.weekdays was updated/rearranged
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataVC:", name: "onReceivedReload", object: nil);
     }
     
     override func viewWillAppear(animated: Bool) {
         parentView.backgroundColor = DataService.instance.weekdays[0].bgColor
     }
-    
+
     override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?) {
         super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
     }
@@ -38,9 +42,17 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+
+    func updateDataVC(notif: NSNotification) {
+        setViewControllers(self.viewControllers, direction: .Forward, animated: true, completion: nil)
+        if let vc = self.viewControllers as? [DataViewController] {
+            print("first index is \(vc[0].dataObject.title)")
+        }
+    }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        // snapped = 375, left = 0, right = 750
+        
         let sx: CGFloat = CGFloat(scrollView.contentOffset.x)
         var percentage: CGFloat = 0.0
         
@@ -50,13 +62,17 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         } else if sx > viewWidth && sx < viewWidth * 2 {
             percentage = ((viewWidth - sx) / viewWidth) * -100
         } else {
-            percentage = 100
+            if sx == 0.0 {
+                percentage = -100
+            } else if sx == viewWidth * 2 {
+                percentage = 100
+            }
         }
-        //print(percentage)
+        
         // Indexes
         let currentIndex: Int = clamp(DataService.instance.currentIndex, lower: 0, upper: DataService.instance.weekdays.count-1)
         let nextIndex: Int = clamp(DataService.instance.currentIndex + Int(1*sign(percentage)), lower: 0, upper: DataService.instance.weekdays.count-1)
-        
+                
         // Reverse equation if percentage is -
         if abs(percentage) < 100 {
             if sign(percentage) > 0 {
@@ -84,8 +100,6 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         return color
     }
     
-
-    
     func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
         return min(max(value, lower), upper)
     }
@@ -99,16 +113,6 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
             return 0
         }
     }
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-
-
 }
 
 

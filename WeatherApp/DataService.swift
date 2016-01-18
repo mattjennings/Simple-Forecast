@@ -43,14 +43,16 @@ class DataService {
     }
     
     func getForecast(completed: DownloadComplete) {
-        // forecast/daily?q= gets the 16 day forecast so we can restrict it to 7 results
-        // forecast?q= gets the 5 day forecast in 3 hour intervals
         
         // Get the temperature for the week
         Alamofire.request(.GET, "\(URL_BASE)forecast/daily?q=Brandon,ca&mode=json&cnt=7&units=metric&APPID=\(API_KEY)")
             .responseJSON { response in
                 let result = response.result
                 
+                let dateFormatter = NSDateFormatter()
+                let yearFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "MMM dd"
+                yearFormatter.dateFormat = "yyyy"
                 if let dict = result.value as? Dictionary<String, AnyObject> {
                     
                     // Reminder of where city info is
@@ -78,6 +80,15 @@ class DataService {
                                         self.weekdays[i].icon = icon
                                     }
                                 }
+                                
+                                // Date
+                                if let dateInt = day["dt"] as? Int {
+                                    let date = NSDate(timeIntervalSince1970: NSTimeInterval(dateInt))
+                                    let dateAndMonth = dateFormatter.stringFromDate(date)
+                                    let year = yearFormatter.stringFromDate(date)
+                                    self.weekdays[i].date = "\(dateAndMonth)"
+                                    self.weekdays[i].year = "\(year)"
+                                }
                             }
                             
                             i++
@@ -99,6 +110,7 @@ class DataService {
                 
                 let currentDay = getDayOfMonth()
                 let dayFormatter = NSDateFormatter()
+                
                 let timeFormatter = NSDateFormatter()
                 dayFormatter.dateFormat = "dd"
                 timeFormatter.dateFormat = "h:mm a"
@@ -119,13 +131,13 @@ class DataService {
                             
                             // Get date and time
                             if let dateInt = list["dt"] as? Int {
-                                var date = NSDate(timeIntervalSince1970: NSTimeInterval(dateInt))
+                                let date = NSDate(timeIntervalSince1970: NSTimeInterval(dateInt))
                                 let day = dayFormatter.stringFromDate(date)
                                 let hour = timeFormatter.stringFromDate(date)
                                 
+                                
                                 // Index to assign the forecast to
                                 indexToSet = Int(day)! - currentDay!
-                                
                                 newTime = hour
                             }
                             
@@ -146,7 +158,11 @@ class DataService {
                             }
                             
                             newForecast = HourlyForecast(time: newTime, icon: newIcon, weatherDescription: newWeatherDesc, temp: newTemp)
-                            self.weekdays[indexToSet].forecasts += [newForecast]
+                            
+                            // Prevent crash if user changed date
+                            if indexToSet >= 0 {
+                                self.weekdays[indexToSet].forecasts += [newForecast]
+                            }
                         }
                         
                     }

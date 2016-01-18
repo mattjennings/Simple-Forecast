@@ -9,7 +9,7 @@
 import UIKit
 
 /*
- A controller object that manages a simple model -- a collection of month names.
+ A controller object that manages a model
  
  The controller serves as the data source for the page view controller; it therefore implements pageViewController:viewControllerBeforeViewController: and pageViewController:viewControllerAfterViewController:.
  It also implements a custom method, viewControllerAtIndex: which is useful in the implementation of the data source methods, and in the initial configuration of the application.
@@ -25,25 +25,74 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
 
     override init() {
         super.init()
-        // Create the data model
 
+        // So we can update the data when the app is reopened
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+        appDelegate.modelController = self
+        
+
+        updateData()
+    }
+    
+    // This function is also called from applicationWillEnterForeground in AppDelegate
+    func updateData() {
+        
         // Re-organize Weekdays so that the current day is index 0
         if let dayOfWeek = getDayOfWeek() {
             // if it's sunday, don't dequeue the array
             if (dayOfWeek != 1) {
-                for index in 1...dayOfWeek-1 {
-                    DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
+                
+                // Reorganize order so that [0] is Sunday
+                if (DataService.instance.weekdays[0].title != "Sunday") {
+                    let curDay = weekdayToInt(DataService.instance.weekdays[0].title)
+                    let timesToLoop = DataService.instance.weekdays.count - curDay
+                    
+                    for index in 0..<timesToLoop {
+                        DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
+                    }
+                    
+                    // Let WeatherPageVC know we're reorganizing the data
+                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedReload", object: nil));
+                }
+                
+                if (DataService.instance.weekdays[0].title == "Sunday") {
+                    // dequeue the array if the first day of the week is Sunday (i.e, initial load and not a refresh)
+                    for index in 1...dayOfWeek-1 {
+                        DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
+                    }
                 }
             }
         }
         
         DataService.instance.getForecast { () -> () in
-            print("complete")
+            
         }
         
         pageData = DataService.instance.weekdays
+        
     }
-
+    
+    func weekdayToInt(day: String) -> Int {
+        switch(day) {
+        case "Sunday":
+            return 0
+        case "Monday":
+            return 1
+        case "Tuesday":
+            return 2
+        case "Wednesday":
+            return 3
+        case "Thursday":
+            return 4
+        case "Friday":
+            return 5
+        case "Saturday":
+            return 6
+        default:
+            return 0
+        }
+    }
+    
 
     func viewControllerAtIndex(index: Int, storyboard: UIStoryboard) -> DataViewController? {
         // Return the data view controller for the given index.

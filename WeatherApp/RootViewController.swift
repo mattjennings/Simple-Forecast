@@ -16,7 +16,9 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        // Set status bar to light
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         // Configure the page view controller and add it as a child view controller.
         self.pageViewController = WeatherPageVC(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
@@ -32,20 +34,23 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         self.view.addSubview(self.pageViewController!.view)
         
         // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
-        /*
+        
         var pageViewRect = self.view.frame
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
         pageViewRect = CGRectInset(pageViewRect, 40.0, 40.0)
         }
         self.pageViewController!.view.frame = pageViewRect
-        */
+
         
         self.pageViewController!.didMoveToParentViewController(self)
         
         
         self.pageViewController!.parentView = self.view
+        self.pageViewController!.rootViewController = self
         // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
         self.view.gestureRecognizers = self.pageViewController!.gestureRecognizers
+        
+        
     }
 
     override func viewDidLayoutSubviews() {
@@ -53,6 +58,12 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         self.pageViewController!.view.frame = viewFrame.frame
         
     }
+    
+    override func viewDidAppear(animated: Bool) {
+
+    }
+    
+
     
     var modelController: ModelController {
         // Return the model controller object, creating it if necessary.
