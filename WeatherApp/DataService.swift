@@ -103,6 +103,11 @@ class DataService {
         
         // Get the 5 day forecast with 3 hour intervals
         
+        // Clear existing forecasts
+        for wd in self.weekdays {
+            wd.forecasts = []
+        }
+        
         Alamofire.request(.GET, "\(URL_BASE)forecast/?q=Brandon,ca&mode=json&units=metric&APPID=\(API_KEY)")
             .responseJSON { response in
                 

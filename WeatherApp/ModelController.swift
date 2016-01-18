@@ -64,9 +64,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
             }
         }
         
-        DataService.instance.getForecast { () -> () in
-            
-        }
+        DataService.instance.getForecast {}
         
         pageData = DataService.instance.weekdays        
     }
