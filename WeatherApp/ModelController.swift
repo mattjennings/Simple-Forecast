@@ -23,6 +23,8 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
     var pageData: [Weekday] = []
     let locManager = CLLocationManager()
 
+    var checkLocAuthTimer: NSTimer!
+    
     override init() {
         super.init()
 
@@ -63,7 +65,9 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
                 NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedReload", object: nil));
             }
         }
-        
+        if checkLocAuthTimer != nil {
+            checkLocAuthTimer.invalidate()
+        }
         if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
             locManager.requestLocation()
             if let loc = locManager.location {
@@ -74,10 +78,12 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
             }
             
             DataService.instance.getForecast {}
-        } else {
+        } else if CLLocationManager.authorizationStatus() == .Denied {
             let alert: UIAlertView = UIAlertView(title: "Location Service Disabled", message: "To re-enable, please go to Settings and turn on Location Service for this app.", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
+        } else {
             locManager.requestWhenInUseAuthorization()
+            startTimer()
         }
         pageData = DataService.instance.weekdays        
     }
@@ -109,6 +115,14 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error.debugDescription)
+    }
+    
+    func startTimer() {
+        if checkLocAuthTimer != nil {
+            checkLocAuthTimer.invalidate();
+        }
+        
+        checkLocAuthTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateData", userInfo: nil, repeats: true);
     }
 
     func viewControllerAtIndex(index: Int, storyboard: UIStoryboard) -> DataViewController? {
