@@ -32,8 +32,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BD2-1l-Ujb">
                                 <rect key="frame" x="0.0" y="28" width="600" height="67"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BRANDON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="Db9-6c-Lka">
-                                        <rect key="frame" x="8" y="4" width="584" height="58.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BRANDON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="Db9-6c-Lka">
+                                        <rect key="frame" x="8" y="10" width="584" height="47"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -45,17 +45,27 @@
                                             <constraint firstAttribute="height" constant="1" id="IOi-sL-1sT"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAz-cs-QjX">
+                                        <rect key="frame" x="561" y="17" width="23" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="ZRc-wn-niV"/>
+                                            <constraint firstAttribute="width" constant="23" id="mPb-9J-O1K"/>
+                                        </constraints>
+                                        <state key="normal" image="update_location"/>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="cCd-bM-Nci" firstAttribute="trailing" secondItem="BD2-1l-Ujb" secondAttribute="trailingMargin" id="3hF-iT-zhe"/>
                                     <constraint firstAttribute="bottom" secondItem="cCd-bM-Nci" secondAttribute="bottom" constant="4" id="7aE-qn-Bpv"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="IAz-cs-QjX" secondAttribute="trailing" constant="8" id="KO2-vP-e7D"/>
                                     <constraint firstAttribute="trailing" secondItem="Db9-6c-Lka" secondAttribute="trailing" constant="8" id="LzS-iy-f41"/>
                                     <constraint firstItem="cCd-bM-Nci" firstAttribute="leading" secondItem="BD2-1l-Ujb" secondAttribute="leadingMargin" id="Mou-ax-I2A"/>
                                     <constraint firstItem="cCd-bM-Nci" firstAttribute="top" secondItem="Db9-6c-Lka" secondAttribute="bottom" constant="-4" id="Sjb-0H-vbf"/>
                                     <constraint firstAttribute="bottom" secondItem="cCd-bM-Nci" secondAttribute="bottom" constant="3" id="USi-sy-RR6"/>
                                     <constraint firstItem="Db9-6c-Lka" firstAttribute="centerY" secondItem="BD2-1l-Ujb" secondAttribute="centerY" id="bHz-Yf-lPQ"/>
                                     <constraint firstItem="Db9-6c-Lka" firstAttribute="leading" secondItem="BD2-1l-Ujb" secondAttribute="leading" constant="8" id="kYR-yw-XAN"/>
+                                    <constraint firstItem="IAz-cs-QjX" firstAttribute="centerY" secondItem="Db9-6c-Lka" secondAttribute="centerY" id="yx2-XU-YRn"/>
                                     <constraint firstItem="cCd-bM-Nci" firstAttribute="top" secondItem="Db9-6c-Lka" secondAttribute="bottom" id="zAy-wA-ngV"/>
                                 </constraints>
                                 <variation key="default">
@@ -315,5 +325,6 @@
     <resources>
         <image name="cloud" width="1882" height="1252"/>
         <image name="sun" width="2112" height="2112"/>
+        <image name="update_location" width="1489" height="2094"/>
     </resources>
 </document>
