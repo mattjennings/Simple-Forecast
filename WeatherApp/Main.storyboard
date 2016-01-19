@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10072.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="HelveticaNeue.ttc">
@@ -239,6 +240,12 @@
                                     <constraint firstAttribute="height" constant="1" id="laP-AB-oCH"/>
                                 </constraints>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Forecast Not Available" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="Lfs-l3-7Jn">
+                                <rect key="frame" x="20" y="290" width="567" height="247"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="48"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="2016" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="eBR-7h-QtJ">
                                 <rect key="frame" x="535.5" y="554" width="44.5" height="32"/>
                                 <constraints>
@@ -262,15 +269,19 @@
                             <constraint firstItem="9k7-7A-Oxa" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="8" id="7RX-c9-fCJ"/>
                             <constraint firstItem="eBR-7h-QtJ" firstAttribute="height" secondItem="cF2-Le-7mQ" secondAttribute="height" id="9y0-1q-dYR"/>
                             <constraint firstItem="EPS-s9-h4K" firstAttribute="top" secondItem="cF2-Le-7mQ" secondAttribute="bottom" constant="16" id="EVz-uk-Lk3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Lfs-l3-7Jn" secondAttribute="trailing" constant="-7" id="Llg-aP-HWu"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="centerX" secondItem="ZwX-cT-FIQ" secondAttribute="centerX" id="QWh-et-Tnj"/>
                             <constraint firstItem="eBR-7h-QtJ" firstAttribute="centerY" secondItem="cF2-Le-7mQ" secondAttribute="centerY" constant="2" id="R7b-tp-d61"/>
                             <constraint firstItem="UEP-hp-2yt" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="Ugm-j6-0IN"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="WiA-VA-1FD"/>
                             <constraint firstItem="g2F-Rg-6Wx" firstAttribute="trailing" secondItem="ZwX-cT-FIQ" secondAttribute="trailingMargin" id="a0c-mB-QSP"/>
+                            <constraint firstItem="Lfs-l3-7Jn" firstAttribute="centerY" secondItem="ZwX-cT-FIQ" secondAttribute="centerY" multiplier="1.35" id="cg2-0y-HcK"/>
+                            <constraint firstItem="Lfs-l3-7Jn" firstAttribute="top" secondItem="fXf-Jd-eTc" secondAttribute="bottom" constant="270" id="dSp-OE-7va"/>
                             <constraint firstItem="g2F-Rg-6Wx" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="f20-kE-Z27"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="top" secondItem="g2F-Rg-6Wx" secondAttribute="bottom" constant="16" id="iIF-En-007"/>
                             <constraint firstAttribute="trailing" secondItem="UEP-hp-2yt" secondAttribute="trailing" constant="8" id="ivK-Qk-O83"/>
                             <constraint firstItem="cF2-Le-7mQ" firstAttribute="trailing" secondItem="ZwX-cT-FIQ" secondAttribute="trailingMargin" id="jJ6-i5-2id"/>
+                            <constraint firstItem="Lfs-l3-7Jn" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leadingMargin" id="lqt-x3-bZR"/>
                             <constraint firstAttribute="trailing" secondItem="9k7-7A-Oxa" secondAttribute="trailing" constant="8" id="wd4-3l-gQ4"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eBR-7h-QtJ" secondAttribute="trailing" id="xJk-hQ-fiF"/>
                             <constraint firstItem="UEP-hp-2yt" firstAttribute="centerY" secondItem="cF2-Le-7mQ" secondAttribute="centerY" constant="2" id="yDL-qW-0Rq"/>
@@ -278,6 +289,7 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="dSp-OE-7va"/>
                                 <exclude reference="ivK-Qk-O83"/>
                                 <exclude reference="WiA-VA-1FD"/>
                                 <exclude reference="jJ6-i5-2id"/>
@@ -289,6 +301,7 @@
                         <outlet property="dateLabel" destination="UEP-hp-2yt" id="EO7-mx-tYO"/>
                         <outlet property="dayForecastTable" destination="tld-a2-HG9" id="Rev-dH-TKI"/>
                         <outlet property="dayLabel" destination="cF2-Le-7mQ" id="HGF-Ml-yeC"/>
+                        <outlet property="forecastLabel" destination="Lfs-l3-7Jn" id="x8h-0m-Ogi"/>
                         <outlet property="iconImg" destination="QnL-Zr-eN7" id="Ael-Kb-HEH"/>
                         <outlet property="tempLabel" destination="3GE-Sx-ERk" id="PfJ-xm-gVk"/>
                         <outlet property="yearLabel" destination="eBR-7h-QtJ" id="Hmz-oZ-CqP"/>

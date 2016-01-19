@@ -16,6 +16,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var dayForecastTable: UITableView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
+    @IBOutlet weak var forecastLabel: UILabel!
     
     var dataObject: Weekday!
     var bgColor: UIColor!
@@ -49,16 +50,28 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.iconImg.image = UIImage(named: dataObject.icon)
         self.dateLabel.text = dataObject.date
         self.yearLabel.text = dataObject.year
-        dayForecastTable.reloadData()
+        updateTable()
     }
     
-    func updateForecast(notif: AnyObject) {
-        dayForecastTable.reloadData()        
+    func updateTable() {
+        dayForecastTable.reloadData()
+        
+        if dayForecastTable.visibleCells.count != 0 {
+            forecastLabel.hidden = true
+        } else {
+            forecastLabel.hidden = false
+        }
     }
     
     func updateAll(notif: AnyObject) {
         updateData()
     }
+    
+    func updateForecast(notif: AnyObject) {
+        updateTable()
+    }
+    
+
     
     
     // Table view
