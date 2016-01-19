@@ -50,6 +50,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     }
     
 
+    // This is called after the app is reloaded
     func updateDataVC(notif: NSNotification) {
         
         if let vc = rootViewController.modelController.viewControllerAtIndex(getDayOfWeek()!-2, storyboard: rootViewController.storyboard!) as? UIViewController {
@@ -59,22 +60,23 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
                 parentView.backgroundColor = dvc.dataObject.bgColor
             }
         }
-    }
-    
-    
-    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
-        if sign(scrollPercentage) > 0 && currentIndex < DataService.instance.weekdays.count-1 {
-            nextIndex = currentIndex + 1
-        } else if sign(scrollPercentage) < 0 && currentIndex > 0 {
-            nextIndex = currentIndex - 1
-        }        
-    }
-    
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
         if let dvc = self.viewControllers as? [DataViewController] {
             let actualIndex = rootViewController.modelController.indexOfViewController(dvc[0])
             currentIndex = actualIndex
+            parentView.backgroundColor = DataService.instance.weekdays[currentIndex].bgColor
+        }
+    }
+    
+    
+    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+        scrollDirection = sign(scrollPercentage)
+        
+        // Calculate the next index based on scroll direction
+        if scrollDirection > 0 && currentIndex < DataService.instance.weekdays.count-1 {
+            nextIndex = currentIndex + 1
+        } else if scrollDirection < 0 && currentIndex > 0 {
+            nextIndex = currentIndex - 1
         }
     }
 
@@ -93,6 +95,13 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
                 scrollPercentage = 100
             }
         }
+    
+        // Update current index
+        if let dvc = self.viewControllers as? [DataViewController] {
+            let actualIndex = rootViewController.modelController.indexOfViewController(dvc[0])
+            currentIndex = actualIndex
+        }
+        
         
         // Reverse equation if percentage is -
         if abs(scrollPercentage) > 0 && abs(scrollPercentage) < 100 {
