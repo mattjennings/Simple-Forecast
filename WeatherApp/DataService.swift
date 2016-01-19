@@ -9,12 +9,14 @@
 import Foundation
 import UIKit
 import Alamofire
+import MapKit
 
 class DataService {
 
     static let instance = DataService()
     
-    private var _currentIndex: Int = 0
+    private var _currentLocation: CLLocation!
+    private var _city: String!
     
     private var _weekdays = [
         Weekday(bgColor: UIColor(red: 51/255, green: 110/255, blue: 123/255, alpha: 1), title: "Sunday"),     // Faded blue
@@ -34,11 +36,11 @@ class DataService {
         }
     }
     
-    var currentIndex: Int {
-        set (newValue) {
-            _currentIndex = newValue
+    var currentLocation: CLLocation {
+        set (newVal) {
+            _currentLocation = newVal
         } get {
-            return _currentIndex
+            return _currentLocation
         }
     }
     

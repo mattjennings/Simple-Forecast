@@ -116,7 +116,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         
         // For some reason the index value is not proper (in relation to DataService.[Weekday]) when read after the index--
         // this method came with the template provided by Xcode 7... not experienced enough to know why
-        DataService.instance.currentIndex = index
+        //DataService.instance.currentIndex = index
         if (index == 0) || (index == NSNotFound) {
             return nil
         }
@@ -127,7 +127,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         var index = self.indexOfViewController(viewController as! DataViewController)
-        DataService.instance.currentIndex = index
+        //DataService.instance.currentIndex = index
         if index == NSNotFound {
             return nil
         }

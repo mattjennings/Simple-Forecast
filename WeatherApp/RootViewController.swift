@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import MapKit
 
 class RootViewController: UIViewController, UIPageViewControllerDelegate {
     
     var pageViewController: WeatherPageVC?
     
     @IBOutlet weak var viewFrame: UIView!
+    
+    
+    let locManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +65,15 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-
+        locManager.requestWhenInUseAuthorization()
+        
+        
+        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+                
+                DataService.instance.currentLocation = locManager.location!
+                print(DataService.instance.currentLocation.coordinate.latitude)
+                print(DataService.instance.currentLocation.coordinate.longitude)
+        }
     }
     
     var modelController: ModelController {
