@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import MapKit
 /*
  A controller object that manages a model
  
@@ -21,7 +21,7 @@ import UIKit
 class ModelController: NSObject, UIPageViewControllerDataSource {
 
     var pageData: [Weekday] = []
-
+    let locManager = CLLocationManager()
 
     override init() {
         super.init()
@@ -64,8 +64,13 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
             }
         }
         
-        DataService.instance.getForecast {}
-        
+        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+            
+            DataService.instance.currentLocation = locManager.location!
+            DataService.instance.getForecast {}
+        } else {
+            locManager.requestWhenInUseAuthorization()
+        }
         pageData = DataService.instance.weekdays        
     }
     

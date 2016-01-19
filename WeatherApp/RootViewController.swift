@@ -13,11 +13,9 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     
     var pageViewController: WeatherPageVC?
     
-    @IBOutlet weak var viewFrame: UIView!
-    
-    
-    let locManager = CLLocationManager()
-    
+    @IBOutlet weak var viewFrame: UIView!        
+    @IBOutlet weak var cityLabel: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,7 +53,18 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
         self.view.gestureRecognizers = self.pageViewController!.gestureRecognizers
         
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateData:", name: "onReceivedReload", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateData:", name: "onReceivedWeather", object: nil)
+    }
+    
+    func updateData(notif: NSNotification) {
+        updateLabel()
+    }
+    
+    func updateLabel() {
+        let city = DataService.instance.city
+        let country = DataService.instance.country
+        cityLabel.text = "\(city), \(country)"
     }
 
     override func viewDidLayoutSubviews() {
@@ -65,15 +74,7 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        locManager.requestWhenInUseAuthorization()
-        
-        
-        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
-                
-                DataService.instance.currentLocation = locManager.location!
-                print(DataService.instance.currentLocation.coordinate.latitude)
-                print(DataService.instance.currentLocation.coordinate.longitude)
-        }
+
     }
     
     var modelController: ModelController {

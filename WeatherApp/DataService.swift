@@ -16,7 +16,8 @@ class DataService {
     static let instance = DataService()
     
     private var _currentLocation: CLLocation!
-    private var _city: String!
+    private var _city: String = "LOADING"
+    private var _country: String = ""
     
     private var _weekdays = [
         Weekday(bgColor: UIColor(red: 51/255, green: 110/255, blue: 123/255, alpha: 1), title: "Sunday"),     // Faded blue
@@ -44,10 +45,30 @@ class DataService {
         }
     }
     
+    var city: String! {
+        set (newVal) {
+            _city = newVal
+        } get {
+            return _city
+        }
+    }
+    
+    var country: String! {
+        set (newVal) {
+            _country = newVal
+        } get {
+            return _country
+        }
+    }
+    
     func getForecast(completed: DownloadComplete) {
         
+        let locationType = "lat=\(self.currentLocation.coordinate.latitude)&lon=\(self.currentLocation.coordinate.longitude)"
+        
+        let url = "\(URL_BASE)forecast/daily?\(locationType)&mode=json&cnt=7&units=metric&APPID=\(API_KEY)"
+        
         // Get the temperature for the week
-        Alamofire.request(.GET, "\(URL_BASE)forecast/daily?q=Brandon,ca&mode=json&cnt=7&units=metric&APPID=\(API_KEY)")
+        Alamofire.request(.GET, url)
             .responseJSON { response in
                 let result = response.result
                 
@@ -55,10 +76,19 @@ class DataService {
                 let yearFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = "MMM dd"
                 yearFormatter.dateFormat = "yyyy"
+
                 if let dict = result.value as? Dictionary<String, AnyObject> {
                     
                     // Reminder of where city info is
-                    // if let city = dict["city"] as? Dictionary<String, AnyObject>
+                    if let city = dict["city"] as? Dictionary<String, AnyObject> {
+                        if let name = city["name"] as? String {
+                            self.city = name
+                        }
+                        
+                        if let country = city["country"] as? String {
+                            self.country = country                            
+                        }
+                    }
 
                     // Days
                     if let lists = dict["list"] as? [AnyObject] {

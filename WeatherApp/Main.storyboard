@@ -45,7 +45,7 @@
                                             <constraint firstAttribute="height" constant="1" id="IOi-sL-1sT"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAz-cs-QjX">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAz-cs-QjX">
                                         <rect key="frame" x="561" y="17" width="23" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="ZRc-wn-niV"/>
@@ -54,7 +54,7 @@
                                         <state key="normal" image="update_location"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="cCd-bM-Nci" firstAttribute="trailing" secondItem="BD2-1l-Ujb" secondAttribute="trailingMargin" id="3hF-iT-zhe"/>
                                     <constraint firstAttribute="bottom" secondItem="cCd-bM-Nci" secondAttribute="bottom" constant="4" id="7aE-qn-Bpv"/>
@@ -101,6 +101,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="cityLabel" destination="Db9-6c-Lka" id="4KW-G0-cx7"/>
                         <outlet property="viewFrame" destination="8FG-Wn-JU9" id="DE7-MJ-5Ha"/>
                     </connections>
                 </viewController>
