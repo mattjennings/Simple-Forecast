@@ -18,7 +18,7 @@ import MapKit
  */
 
 
-class ModelController: NSObject, UIPageViewControllerDataSource {
+class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManagerDelegate {
 
     var pageData: [Weekday] = []
     let locManager = CLLocationManager()
@@ -30,7 +30,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
         appDelegate.modelController = self
         
-
+        locManager.delegate = self
         updateData()
     }
     
@@ -65,10 +65,18 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         }
         
         if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+            locManager.requestLocation()
+            if let loc = locManager.location {
+                DataService.instance.currentLocation = loc                
+            } else {
+                // Default to Brandon, Canada
+                DataService.instance.currentLocation = CLLocation(latitude: CLLocationDegrees(49.84692), longitude: CLLocationDegrees(-99.953056))
+            }
             
-            DataService.instance.currentLocation = locManager.location!
             DataService.instance.getForecast {}
         } else {
+            let alert: UIAlertView = UIAlertView(title: "Location Service Disabled", message: "To re-enable, please go to Settings and turn on Location Service for this app.", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
             locManager.requestWhenInUseAuthorization()
         }
         pageData = DataService.instance.weekdays        
@@ -95,6 +103,13 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         }
     }
     
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print(error.debugDescription)
+    }
 
     func viewControllerAtIndex(index: Int, storyboard: UIStoryboard) -> DataViewController? {
         // Return the data view controller for the given index.

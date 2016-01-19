@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrollViewDelegate {
     
     var rootViewController: RootViewController!
@@ -21,7 +20,6 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     var nextIndex: Int = 0
     var scrollDirection: Int = 0
     
-    var isTouching = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,10 +74,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
-        if let dvc = self.viewControllers as? [DataViewController] {
-            let actualIndex = rootViewController.modelController.indexOfViewController(dvc[0])
-            currentIndex = actualIndex
-        }
+        updateCurrentIndex()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -103,10 +98,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         
         // this prevents the colors from messing up when rapidly swiping back and forth between 2 views
         if scrollDirection == -1 {
-            if let dvc = self.viewControllers as? [DataViewController] {
-                let actualIndex = rootViewController.modelController.indexOfViewController(dvc[0])
-                currentIndex = actualIndex
-            }
+            updateCurrentIndex()
         }
         
         // Reverse equation if percentage is -
@@ -120,6 +112,13 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         
         lastScrollPercentage = scrollPercentage
         
+    }
+    
+    func updateCurrentIndex() {
+        if let dvc = self.viewControllers as? [DataViewController] {
+            let actualIndex = rootViewController.modelController.indexOfViewController(dvc[0])
+            currentIndex = actualIndex
+        }
     }
     
     func blendColor(firstColor: UIColor, secondColor: UIColor, percent: CGFloat) -> UIColor {

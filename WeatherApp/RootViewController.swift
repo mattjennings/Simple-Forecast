@@ -16,6 +16,7 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     @IBOutlet weak var viewFrame: UIView!        
     @IBOutlet weak var cityLabel: UILabel!
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -75,6 +76,7 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     
     override func viewDidAppear(animated: Bool) {
 
+        
     }
     
     var modelController: ModelController {
