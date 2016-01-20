@@ -52,12 +52,12 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     
     func updateDataVC(notif: NSNotification) {
         
-        if let vc = rootViewController.modelController.viewControllerAtIndex(getDayOfWeek()!-2, storyboard: rootViewController.storyboard!) as? UIViewController {
+        if let vc = rootViewController.modelController.viewControllerAtIndex(0, storyboard: rootViewController.storyboard!) {
             let v = [vc]
             setViewControllers(v, direction: UIPageViewControllerNavigationDirection.Reverse, animated: false, completion: nil)
-            if let dvc = v[0] as? DataViewController {
-                parentView.backgroundColor = dvc.dataObject.bgColor
-            }
+            let dvc = v[0]            
+            parentView.backgroundColor = dvc.dataObject.bgColor
+            currentIndex = 0
         }
     }
     

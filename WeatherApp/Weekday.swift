@@ -86,7 +86,7 @@ class Weekday: Equatable {
     init(bgColor: UIColor, title: String) {
         _bgColor = bgColor
         _title = title
-        _temperature = "LOADING"
+        _temperature = ""
         _icon = "13d"
         _date = ""
         _year = ""

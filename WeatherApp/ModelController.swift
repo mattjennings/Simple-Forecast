@@ -55,7 +55,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
                 }
                 
                 if (DataService.instance.weekdays[0].title == "Sunday") {
-                    // dequeue the array if the first day of the week is Sunday (i.e, initial load and not a refresh)
+                    // dequeue the array if the first day of the week is Sunday (i.e, initial load and not a refresh)                    
                     for _ in 1...dayOfWeek-1 {
                         DataService.instance.weekdays.append(DataService.instance.weekdays.dequeue()!)
                     }                     

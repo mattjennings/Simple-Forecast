@@ -22,7 +22,7 @@ class DataService {
     private var _weekdays = [
         Weekday(bgColor: UIColor(red: 51/255, green: 110/255, blue: 123/255, alpha: 1), title: "Sunday"),     // Faded blue
         Weekday(bgColor: UIColor(red: 197/255, green: 57/255, blue: 43/255, alpha: 1), title: "Monday"),      // Red
-        Weekday(bgColor: UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1), title: "Tuesday"),    // Bright Blue
+        Weekday(bgColor: UIColor(red: 34/255, green: 167/255, blue: 240/255, alpha: 1), title: "Tuesday"),    // Bright Blue
         Weekday(bgColor: UIColor(red: 241/255, green: 171/255, blue: 53/255, alpha: 1), title: "Wednesday"),  // Yellow
         Weekday(bgColor: UIColor(red: 142/255, green: 68/255, blue: 173/255, alpha: 1), title: "Thursday"),   // Purple
         Weekday(bgColor: UIColor(red: 39/255, green: 174/255, blue: 96/255, alpha: 1), title: "Friday"),      // Green

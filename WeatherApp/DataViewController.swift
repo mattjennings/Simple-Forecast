@@ -32,7 +32,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         dayForecastTable.delegate = self
         dayForecastTable.dataSource = self
-        dayForecastTable.backgroundColor = UIColor.clearColor()        
+        dayForecastTable.backgroundColor = UIColor.clearColor()    
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -70,9 +70,6 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
     func updateForecast(notif: AnyObject) {
         updateTable()
     }
-    
-
-    
     
     // Table view
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
