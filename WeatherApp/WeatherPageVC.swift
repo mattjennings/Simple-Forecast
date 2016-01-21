@@ -35,6 +35,9 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         
         // If DataService.instance.weekdays was updated/rearranged
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataVC:", name: "onReceivedReload", object: nil);
+        
+        // On orientation change
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -47,6 +50,10 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func rotated() {
+        updateCurrentIndex()
     }
     
     
