@@ -25,28 +25,28 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        self.view.backgroundColor = UIColor.clearColor()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateWeekday:", name: "onReceivedWeather", object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateForecast:", name: "onReceivedForecast", object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAll:", name: "onReceivedReload", object: nil);
+        self.view.backgroundColor = UIColor.clear
+        NotificationCenter.default.addObserver(self, selector: #selector(DataViewController.updateWeekday(_:)), name: NSNotification.Name(rawValue: "onReceivedWeather"), object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(DataViewController.updateForecast(_:)), name: NSNotification.Name(rawValue: "onReceivedForecast"), object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(DataViewController.updateAll(_:)), name: NSNotification.Name(rawValue: "onReceivedReload"), object: nil);
         
         dayForecastTable.delegate = self
         dayForecastTable.dataSource = self
-        dayForecastTable.backgroundColor = UIColor.clearColor()    
+        dayForecastTable.backgroundColor = UIColor.clear    
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateData()        
     }
     
-    func updateWeekday(notif: AnyObject) {
+    func updateWeekday(_ notif: AnyObject) {
         updateData()
     }
     
     func updateData() {
         self.dayLabel!.text = dataObject.title
-        self.tempLabel.text = "\(dataObject.temperature)"
+        self.tempLabel.text = "\(dataObject.temperature)"        
         self.iconImg.image = UIImage(named: dataObject.icon)
         self.dateLabel.text = dataObject.date
         self.yearLabel.text = dataObject.year
@@ -57,27 +57,27 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         dayForecastTable.reloadData()
         
         if dayForecastTable.visibleCells.count != 0 {
-            forecastLabel.hidden = true
+            forecastLabel.isHidden = true
         } else {
-            forecastLabel.hidden = false
+            forecastLabel.isHidden = false
         }
     }
     
-    func updateAll(notif: AnyObject) {
+    func updateAll(_ notif: AnyObject) {
         updateData()
     }
     
-    func updateForecast(notif: AnyObject) {
+    func updateForecast(_ notif: AnyObject) {
         updateTable()
     }
     
     // Table view
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("DayForecastCell", forIndexPath: indexPath) as? DayForecastCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "DayForecastCell", for: indexPath) as? DayForecastCell {
             if dataObject.forecasts.count > 0 {                
-                let time = dataObject.forecasts[indexPath.row].time
-                let icon = dataObject.forecasts[indexPath.row].icon
-                let temp = dataObject.forecasts[indexPath.row].temp
+                let time = dataObject.forecasts[(indexPath as NSIndexPath).row].time
+                let icon = dataObject.forecasts[(indexPath as NSIndexPath).row].icon
+                let temp = dataObject.forecasts[(indexPath as NSIndexPath).row].temp
                 
                 cell.configureCell(time, icon: icon, temp: temp)
             } else {
@@ -89,15 +89,15 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.backgroundColor = UIColor.clearColor()
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataObject.forecasts.count
     }
 }

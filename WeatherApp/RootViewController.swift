@@ -21,15 +21,15 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         super.viewDidLoad()
 
         // Set status bar to light
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        UIApplication.shared.statusBarStyle = .lightContent
         
         // Configure the page view controller and add it as a child view controller.
-        self.pageViewController = WeatherPageVC(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+        self.pageViewController = WeatherPageVC(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         self.pageViewController!.delegate = self
         
         let startingViewController: DataViewController = self.modelController.viewControllerAtIndex(0, storyboard: self.storyboard!)!
         let viewControllers = [startingViewController]
-        self.pageViewController!.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: {done in })
+        self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: false, completion: {done in })
         
         self.pageViewController!.dataSource = self.modelController
         //self.pageViewController!.delegate = self
@@ -40,13 +40,13 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
         
         var pageViewRect = self.view.frame
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-        pageViewRect = CGRectInset(pageViewRect, 40.0, 40.0)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+        pageViewRect = pageViewRect.insetBy(dx: 40.0, dy: 40.0)
         }
         self.pageViewController!.view.frame = pageViewRect
 
         
-        self.pageViewController!.didMoveToParentViewController(self)
+        self.pageViewController!.didMove(toParentViewController: self)
         
         
         self.pageViewController!.parentView = self.view
@@ -54,28 +54,23 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
         self.view.gestureRecognizers = self.pageViewController!.gestureRecognizers
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateData:", name: "onReceivedReload", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateData:", name: "onReceivedWeather", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.updateData(_:)), name: NSNotification.Name(rawValue: "onReceivedReload"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.updateData(_:)), name: NSNotification.Name(rawValue: "onReceivedWeather"), object: nil)
     }
     
-    func updateData(notif: NSNotification) {
+    func updateData(_ notif: Notification) {
         updateLabel()
     }
     
     func updateLabel() {
-        let city = DataService.instance.city
-        let country = DataService.instance.country
+        let city = DataService.instance.city!
+        let country = DataService.instance.country!
         cityLabel.text = "\(city), \(country)"
     }
 
     override func viewDidLayoutSubviews() {
         // After constraints are applied
         self.pageViewController!.view.frame = viewFrame.frame
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-
         
     }
     
@@ -91,22 +86,17 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     var _modelController: ModelController? = nil
     
     
-    
-    
-    
-    
-    
     // MARK: - UIPageViewController delegate methods
     
-    func pageViewController(pageViewController: UIPageViewController, spineLocationForInterfaceOrientation orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation {
+    func pageViewController(_ pageViewController: UIPageViewController, spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation {
         //if (orientation == .Portrait) || (orientation == .PortraitUpsideDown) || (UIDevice.currentDevice().userInterfaceIdiom == .Phone) {
             // In portrait orientation or on iPhone: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to true, so set it to false here.
             let currentViewController = self.pageViewController!.viewControllers![0]
             let viewControllers = [currentViewController]
-            self.pageViewController!.setViewControllers(viewControllers, direction: .Forward, animated: true, completion: {done in })
+            self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
             
-            self.pageViewController!.doubleSided = false
-            return .Min    
+            self.pageViewController!.isDoubleSided = false
+            return .min    
     }
     
 }

@@ -17,20 +17,20 @@ typealias DownloadComplete = () -> ()
 
 
 func getDayOfWeek() -> Int? {
-    let dateFormatter = NSDateFormatter()
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "e"
-    let dayOfWeekString = dateFormatter.stringFromDate(NSDate())
+    let dayOfWeekString = dateFormatter.string(from: Date())
     return (Int(dayOfWeekString))
 }
 
 func getDayOfMonth() -> Int? {
-    let dateFormatter = NSDateFormatter()
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd"
-    let dayOfMonthString = dateFormatter.stringFromDate(NSDate())
+    let dayOfMonthString = dateFormatter.string(from: Date())
     return (Int(dayOfMonthString))
 }
 
-func iconNameToImageName(name: String) -> String {
+func iconNameToImageName(_ name: String) -> String {
     var v = ""
     switch (name) {
     case "01d":
@@ -58,7 +58,7 @@ func iconNameToImageName(name: String) -> String {
 extension Array {
     
     //Stack - LIFO
-    mutating func push(newElement: Element) {
+    mutating func push(_ newElement: Element) {
         self.append(newElement)
     }
     
@@ -71,12 +71,12 @@ extension Array {
     }
     
     //Queue - FIFO
-    mutating func enqueue(newElement: Element) {
+    mutating func enqueue(_ newElement: Element) {
         self.append(newElement)
     }
     
     mutating func dequeue() -> Element? {
-        return self.removeAtIndex(0)
+        return self.remove(at: 0)
     }
     
     func peekAtQueue() -> Element? {
@@ -89,7 +89,7 @@ extension UIColor {
         return CoreImage.CIColor(color: self)  // The resulting Core Image color, or nil
     }
     
-    func adjust(red: CGFloat, green: CGFloat, blue: CGFloat, alpha:CGFloat) -> UIColor{
+    func adjust(_ red: CGFloat, green: CGFloat, blue: CGFloat, alpha:CGFloat) -> UIColor{
         var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0        
         self.getRed(&r, green: &g, blue: &b, alpha: &a)
         return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)

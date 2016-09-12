@@ -9,10 +9,10 @@
 import Foundation
 
 class HourlyForecast {
-    private var _time: String!
-    private var _temp: String!
-    private var _icon: String!
-    private var _weatherDesc: String!
+    fileprivate var _time: String!
+    fileprivate var _temp: String!
+    fileprivate var _icon: String!
+    fileprivate var _weatherDesc: String!
     
     var time: String {
         return _time

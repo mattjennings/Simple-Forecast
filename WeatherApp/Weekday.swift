@@ -11,14 +11,14 @@ import UIKit
 
 class Weekday: Equatable {
 
-    private var _bgColor: UIColor!
-    private var _title: String!
+    fileprivate var _bgColor: UIColor!
+    fileprivate var _title: String!
     
-    private var _temperature: String!
-    private var _icon: String!
+    fileprivate var _temperature: String!
+    fileprivate var _icon: String!
     
-    private var _date: String!
-    private var _year: String!
+    fileprivate var _date: String!
+    fileprivate var _year: String!
     
     var forecasts = [HourlyForecast]()
     

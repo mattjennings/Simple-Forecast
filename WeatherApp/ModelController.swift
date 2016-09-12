@@ -23,13 +23,13 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
     var pageData: [Weekday] = []
     let locManager = CLLocationManager()
 
-    var checkLocAuthTimer: NSTimer!
+    var checkLocAuthTimer: Timer!
     
     override init() {
         super.init()
 
         // So we can update the data when the app is reopened
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+        let appDelegate:AppDelegate = UIApplication.shared.delegate! as! AppDelegate
         appDelegate.modelController = self
         
         locManager.delegate = self
@@ -62,13 +62,13 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
                 }
                                 
                 // Let WeatherPageVC know we're reorganizing the data
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedReload", object: nil));
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "onReceivedReload"), object: nil));
             }
         }
         if checkLocAuthTimer != nil {
             checkLocAuthTimer.invalidate()
         }
-        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             locManager.requestLocation()
             if let loc = locManager.location {
                 DataService.instance.currentLocation = loc                
@@ -78,7 +78,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
             }
             
             DataService.instance.getForecast {}
-        } else if CLLocationManager.authorizationStatus() == .Denied {
+        } else if CLLocationManager.authorizationStatus() == .denied {
             let alert: UIAlertView = UIAlertView(title: "Location Service Disabled", message: "To re-enable, please go to Settings and turn on Location Service for this app.", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         } else {
@@ -88,7 +88,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
         pageData = DataService.instance.weekdays        
     }
     
-    func weekdayToInt(day: String) -> Int {
+    func weekdayToInt(_ day: String) -> Int {
         switch(day) {
         case "Sunday":
             return 0
@@ -109,12 +109,12 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
         }
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print(error.debugDescription)
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
     
     func startTimer() {
@@ -122,30 +122,30 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
             checkLocAuthTimer.invalidate();
         }
         
-        checkLocAuthTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateData", userInfo: nil, repeats: true);
+        checkLocAuthTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ModelController.updateData), userInfo: nil, repeats: true);
     }
 
-    func viewControllerAtIndex(index: Int, storyboard: UIStoryboard) -> DataViewController? {
+    func viewControllerAtIndex(_ index: Int, storyboard: UIStoryboard) -> DataViewController? {
         // Return the data view controller for the given index.
         if (self.pageData.count == 0) || (index >= self.pageData.count) {
             return nil
         }
         
         // Create a new view controller and pass suitable data.
-        let dataViewController = storyboard.instantiateViewControllerWithIdentifier("DataViewController") as! DataViewController
+        let dataViewController = storyboard.instantiateViewController(withIdentifier: "DataViewController") as! DataViewController
         dataViewController.dataObject = self.pageData[index]
         return dataViewController
     }
 
-    func indexOfViewController(viewController: DataViewController) -> Int {
+    func indexOfViewController(_ viewController: DataViewController) -> Int {
         // Return the index of the given data view controller.
         // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
-        return pageData.indexOf(viewController.dataObject) ?? NSNotFound
+        return pageData.index(of: viewController.dataObject) ?? NSNotFound
     }
 
     // MARK: - Page View Controller Data Source
 
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         var index = self.indexOfViewController(viewController as! DataViewController)
         
         // For some reason the index value is not proper (in relation to DataService.[Weekday]) when read after the index--
@@ -155,18 +155,18 @@ class ModelController: NSObject, UIPageViewControllerDataSource, CLLocationManag
             return nil
         }
 
-        index--
+        index -= 1
         return self.viewControllerAtIndex(index, storyboard: viewController.storyboard!)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         var index = self.indexOfViewController(viewController as! DataViewController)
         //DataService.instance.currentIndex = index
         if index == NSNotFound {
             return nil
         }
         
-        index++
+        index += 1
         if index == self.pageData.count {
             return nil
         }

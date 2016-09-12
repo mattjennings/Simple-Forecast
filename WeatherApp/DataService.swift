@@ -15,11 +15,11 @@ class DataService {
 
     static let instance = DataService()
     
-    private var _currentLocation: CLLocation!
-    private var _city: String = "LOADING"
-    private var _country: String = ""
+    fileprivate var _currentLocation: CLLocation!
+    fileprivate var _city: String = "LOADING"
+    fileprivate var _country: String = ""
     
-    private var _weekdays = [
+    fileprivate var _weekdays = [
         Weekday(bgColor: UIColor(red: 51/255, green: 110/255, blue: 123/255, alpha: 1), title: "Sunday"),     // Faded blue
         Weekday(bgColor: UIColor(red: 197/255, green: 57/255, blue: 43/255, alpha: 1), title: "Monday"),      // Red
         Weekday(bgColor: UIColor(red: 34/255, green: 167/255, blue: 240/255, alpha: 1), title: "Tuesday"),    // Bright Blue
@@ -61,19 +61,19 @@ class DataService {
         }
     }
     
-    func getForecast(completed: DownloadComplete) {
+    func getForecast(_ completed: @escaping DownloadComplete) {
         
         let locationType = "lat=\(self.currentLocation.coordinate.latitude)&lon=\(self.currentLocation.coordinate.longitude)"
         
         let url = "\(URL_BASE)forecast/daily?\(locationType)&mode=json&cnt=7&units=metric&APPID=\(API_KEY)"
-        
+                
         // Get the temperature for the week
-        Alamofire.request(.GET, url)
+        Alamofire.request(url)
             .responseJSON { response in
                 let result = response.result
                 
-                let dateFormatter = NSDateFormatter()
-                let yearFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
+                let yearFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMM dd"
                 yearFormatter.dateFormat = "yyyy"
 
@@ -86,7 +86,7 @@ class DataService {
                         }
                         
                         if let country = city["country"] as? String {
-                            self.country = country                            
+                            self.country = country
                         }
                     }
 
@@ -115,20 +115,20 @@ class DataService {
                                 
                                 // Date
                                 if let dateInt = day["dt"] as? Int {
-                                    let date = NSDate(timeIntervalSince1970: NSTimeInterval(dateInt))
-                                    let dateAndMonth = dateFormatter.stringFromDate(date)
-                                    let year = yearFormatter.stringFromDate(date)
+                                    let date = NSDate(timeIntervalSince1970: TimeInterval(dateInt))
+                                    let dateAndMonth = dateFormatter.string(from: date as Date)
+                                    let year = yearFormatter.string(from: date as Date)
                                     self.weekdays[i].date = "\(dateAndMonth)"
                                     self.weekdays[i].year = "\(year)"
                                 }
                             }
                             
-                            i++
+                            i += 1
                         }
                     }
                 }
 
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedWeather", object: nil));
+                NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "onReceivedWeather"), object: nil) as Notification);
                 completed()
         }
         
@@ -140,15 +140,15 @@ class DataService {
             wd.forecasts = []
         }
         
-        Alamofire.request(.GET, "\(URL_BASE)forecast/?q=Brandon,ca&mode=json&units=metric&APPID=\(API_KEY)")
+        Alamofire.request("\(URL_BASE)forecast/?q=Brandon,ca&mode=json&units=metric&APPID=\(API_KEY)")
             .responseJSON { response in
                 
                 let result = response.result
                 
                 let currentDay = getDayOfMonth()
-                let dayFormatter = NSDateFormatter()
+                let dayFormatter = DateFormatter()
                 
-                let timeFormatter = NSDateFormatter()
+                let timeFormatter = DateFormatter()
                 dayFormatter.dateFormat = "dd"
                 timeFormatter.dateFormat = "h:mm a"
                 
@@ -168,9 +168,9 @@ class DataService {
                             
                             // Get date and time
                             if let dateInt = list["dt"] as? Int {
-                                let date = NSDate(timeIntervalSince1970: NSTimeInterval(dateInt))
-                                let day = dayFormatter.stringFromDate(date)
-                                let hour = timeFormatter.stringFromDate(date)
+                                let date = NSDate(timeIntervalSince1970: TimeInterval(dateInt))
+                                let day = dayFormatter.string(from: date as Date)
+                                let hour = timeFormatter.string(from: date as Date)
                                 
                                 
                                 // Index to assign the forecast to
@@ -180,7 +180,7 @@ class DataService {
                             
                             if let main = list["main"] as? Dictionary<String, AnyObject> {
                                 if let temp = main["temp"] as? Double {
-                                    newTemp = "\(Int(temp))"
+                                    newTemp = "\(Int(temp - 273.15))" // Convert from Kelvin to Celsius
                                 }
                             }
                             
@@ -204,7 +204,7 @@ class DataService {
                         
                     }
                 }
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onReceivedForecast", object: nil));                
+                NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "onReceivedForecast"), object: nil) as Notification);
                 completed()
         }
     }

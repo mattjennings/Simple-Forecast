@@ -7,6 +7,26 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrollViewDelegate {
     
@@ -25,7 +45,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         
         // Get the scroll view
         for v in self.view.subviews{
-            if v.isKindOfClass(UIScrollView){
+            if v.isKind(of: UIScrollView.self){
                 (v as! UIScrollView).delegate = self
             }
         }
@@ -34,17 +54,17 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         viewWidth = self.view.bounds.width
         
         // If DataService.instance.weekdays was updated/rearranged
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataVC:", name: "onReceivedReload", object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(WeatherPageVC.updateDataVC(_:)), name: NSNotification.Name(rawValue: "onReceivedReload"), object: nil);
         
         // On orientation change
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WeatherPageVC.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         parentView.backgroundColor = DataService.instance.weekdays[0].bgColor
     }
     
-    override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?) {
+    override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]?) {
         super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
     }
     
@@ -57,11 +77,11 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     }
     
     
-    func updateDataVC(notif: NSNotification) {
+    func updateDataVC(_ notif: Notification) {
         
         if let vc = rootViewController.modelController.viewControllerAtIndex(0, storyboard: rootViewController.storyboard!) {
             let v = [vc]
-            setViewControllers(v, direction: UIPageViewControllerNavigationDirection.Reverse, animated: false, completion: nil)
+            setViewControllers(v, direction: UIPageViewControllerNavigationDirection.reverse, animated: false, completion: nil)
             let dvc = v[0]            
             parentView.backgroundColor = dvc.dataObject.bgColor
             currentIndex = 0
@@ -69,7 +89,7 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
     }
     
     
-    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         
         if sign(scrollPercentage) > 0 && currentIndex < DataService.instance.weekdays.count-1 {
             nextIndex = currentIndex + 1
@@ -79,12 +99,12 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         
     }
     
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
         updateCurrentIndex()
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let sx: CGFloat = CGFloat(scrollView.contentOffset.x)
         // Percentage of view scrolled
         if sx > 0.0 && sx < viewWidth {
@@ -128,8 +148,8 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         }
     }
     
-    func blendColor(firstColor: UIColor, secondColor: UIColor, percent: CGFloat) -> UIColor {
-        var difference = [CGFloat](count: 3, repeatedValue: 0.0) //RGB
+    func blendColor(_ firstColor: UIColor, secondColor: UIColor, percent: CGFloat) -> UIColor {
+        var difference = [CGFloat](repeating: 0.0, count: 3) //RGB
         let perc = abs(percent)
         
         difference[0] = (firstColor.coreImageColor!.red) - (secondColor.coreImageColor!.red)
@@ -145,11 +165,11 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         return color
     }
     
-    func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
+    func clamp<T: Comparable>(_ value: T, lower: T, upper: T) -> T {
         return min(max(value, lower), upper)
     }
     
-    func sign(num: CGFloat) -> Int {
+    func sign(_ num: CGFloat) -> Int {
         if num > 0 {
             return 1
         } else if num < 0 {

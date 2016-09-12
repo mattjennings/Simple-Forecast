@@ -19,7 +19,7 @@ class DayForecastCell: UITableViewCell {
         
     }
     
-    func configureCell(time: String, icon: String, temp: String) {
+    func configureCell(_ time: String, icon: String, temp: String) {
         timeLbl.text = time
         iconImg.image = UIImage(named: icon)
         tempLbl.text = "\(temp) °C"

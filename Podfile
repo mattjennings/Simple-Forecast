@@ -4,6 +4,6 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'WeatherApp' do
-pod 'Alamofire', '~> 3.0'
+ pod 'Alamofire'
 end
 
