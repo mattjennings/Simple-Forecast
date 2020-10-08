@@ -40,7 +40,7 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         updateData()        
     }
     
-    func updateWeekday(_ notif: AnyObject) {
+    @objc func updateWeekday(_ notif: AnyObject) {
         updateData()
     }
     
@@ -63,11 +63,11 @@ class DataViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func updateAll(_ notif: AnyObject) {
+    @objc func updateAll(_ notif: AnyObject) {
         updateData()
     }
     
-    func updateForecast(_ notif: AnyObject) {
+    @objc func updateForecast(_ notif: AnyObject) {
         updateTable()
     }
     

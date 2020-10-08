@@ -57,31 +57,34 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
         NotificationCenter.default.addObserver(self, selector: #selector(WeatherPageVC.updateDataVC(_:)), name: NSNotification.Name(rawValue: "onReceivedReload"), object: nil);
         
         // On orientation change
-        NotificationCenter.default.addObserver(self, selector: #selector(WeatherPageVC.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WeatherPageVC.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         parentView.backgroundColor = DataService.instance.weekdays[0].bgColor
     }
     
-    override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]?) {
-        super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
+    override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]?) {
+// Local variable inserted by Swift 4.2 migrator.
+let options = convertFromOptionalUIPageViewControllerOptionsKeyDictionary(options)
+
+        super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: convertToOptionalUIPageViewControllerOptionsKeyDictionary(options))
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    func rotated() {
+    @objc func rotated() {
         updateCurrentIndex()
     }
     
     
-    func updateDataVC(_ notif: Notification) {
+    @objc func updateDataVC(_ notif: Notification) {
         
         if let vc = rootViewController.modelController.viewControllerAtIndex(0, storyboard: rootViewController.storyboard!) {
             let v = [vc]
-            setViewControllers(v, direction: UIPageViewControllerNavigationDirection.reverse, animated: false, completion: nil)
+            setViewControllers(v, direction: UIPageViewController.NavigationDirection.reverse, animated: false, completion: nil)
             let dvc = v[0]            
             parentView.backgroundColor = dvc.dataObject.bgColor
             currentIndex = 0
@@ -178,4 +181,16 @@ class WeatherPageVC: UIPageViewController, UIPageViewControllerDelegate, UIScrol
             return 0
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromOptionalUIPageViewControllerOptionsKeyDictionary(_ input: [UIPageViewController.OptionsKey: Any]?) -> [String: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalUIPageViewControllerOptionsKeyDictionary(_ input: [String: Any]?) -> [UIPageViewController.OptionsKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIPageViewController.OptionsKey(rawValue: key), value)})
 }

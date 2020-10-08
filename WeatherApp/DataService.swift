@@ -14,6 +14,7 @@ import MapKit
 class DataService {
 
     static let instance = DataService()
+    let geoCoder = CLGeocoder()
     
     fileprivate var _currentLocation: CLLocation!
     fileprivate var _city: String = "LOADING"
@@ -65,9 +66,21 @@ class DataService {
         
         let locationType = "lat=\(self.currentLocation.coordinate.latitude)&lon=\(self.currentLocation.coordinate.longitude)"
         
-        let url = "\(URL_BASE)forecast/daily?\(locationType)&mode=json&cnt=7&units=metric&APPID=\(API_KEY)"
+        
+        geoCoder.reverseGeocodeLocation(self.currentLocation, completionHandler: { (placemarks, _) -> Void in
+            placemarks?.forEach { (placemark) in
+                if let city = placemark.locality {
+                    self.city = city
+                }
                 
-        // Get the temperature for the week
+                if let country = placemark.isoCountryCode {
+                    self.country = country
+                }
+            }
+        })
+        
+        let url = "https://api.openweathermap.org/data/2.5/onecall?\(locationType)&exclude=minutely,alerts&units=metric&appid=\(API_KEY)"
+                
         Alamofire.request(url)
             .responseJSON { response in
                 let result = response.result
@@ -76,43 +89,39 @@ class DataService {
                 let yearFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMM dd"
                 yearFormatter.dateFormat = "yyyy"
+                
+                let currentDay = getDayOfMonth()
+                let dayFormatter = DateFormatter()
 
+                let timeFormatter = DateFormatter()
+                dayFormatter.dateFormat = "dd"
+                timeFormatter.dateFormat = "h:mm a"
+                
                 if let dict = result.value as? Dictionary<String, AnyObject> {
-                    
-                    // Reminder of where city info is
-                    if let city = dict["city"] as? Dictionary<String, AnyObject> {
-                        if let name = city["name"] as? String {
-                            self.city = name
-                        }
-                        
-                        if let country = city["country"] as? String {
-                            self.country = country
-                        }
-                    }
-
-                    // Days
-                    if let lists = dict["list"] as? [AnyObject] {
-                        
+                    if let lists = dict["daily"] as? [AnyObject] {
                         // Loop through each day
                         var i = 0 // index
                         for list in lists {
+                            if (i >= 7) {
+                                break
+                            }
                             if let day = list as? Dictionary<String, AnyObject> {
-                                
+
                                 // Temperature
                                 if let temp = day["temp"] as? Dictionary<String, AnyObject> {
                                     if let dayTemp = temp["day"] as? Double {
                                         self.weekdays[i].temperature = "\(Int(dayTemp))"
                                     }
                                 }
-                                
+
                                 // Weather icon
                                 if let weather = day["weather"] as? [AnyObject] {
-                                    
+
                                     if let icon = weather[0]["icon"] as? String {
                                         self.weekdays[i].icon = icon
                                     }
                                 }
-                                
+
                                 // Date
                                 if let dateInt = day["dt"] as? Int {
                                     let date = NSDate(timeIntervalSince1970: TimeInterval(dateInt))
@@ -122,91 +131,155 @@ class DataService {
                                     self.weekdays[i].year = "\(year)"
                                 }
                             }
-                            
+
                             i += 1
                         }
                     }
-                }
-
-                NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "onReceivedWeather"), object: nil) as Notification);
-                completed()
-        }
-        
-        
-        // Get the 5 day forecast with 3 hour intervals
-        
-        // Clear existing forecasts
-        for wd in self.weekdays {
-            wd.forecasts = []
-        }
-        
-        Alamofire.request("\(URL_BASE)forecast/?q=Brandon,ca&mode=json&units=metric&APPID=\(API_KEY)")
-            .responseJSON { response in
-                
-                let result = response.result
-                
-                let currentDay = getDayOfMonth()
-                let dayFormatter = DateFormatter()
-                
-                let timeFormatter = DateFormatter()
-                dayFormatter.dateFormat = "dd"
-                timeFormatter.dateFormat = "h:mm a"
-                
-                if let dict = result.value as? Dictionary<String, AnyObject> {
                     
-                    if let lists = dict["list"] as? [AnyObject] {
+                    // set today's temp to the current
+                    if let current = dict["current"] as? Dictionary<String, AnyObject> {
+                        if let temp = current["temp"] as? Int {
+                            self.weekdays[0].temperature = "\(Int(temp))"
+                        }
                         
+                        if let weather = current["weather"] as? [AnyObject] {
+                            if let icon = weather[0]["icon"] as? String {
+                                self.weekdays[0].icon = icon
+                            }
+                        }
+
+                    }
+                    
+                    // Get the 5 day forecast with 3 hour intervals
+
+                    // Clear existing forecasts
+                    for wd in self.weekdays {
+                        wd.forecasts = []
+                    }
+                    
+                    
+                    
+                    if let lists = dict["hourly"] as? [AnyObject] {
                         for list in lists {
-                            
                             var indexToSet = 0
-                            
+
                             var newTime = "00:00"
                             var newIcon = "01n"
                             var newTemp = "-60"
                             var newWeatherDesc = "CLOUDS"
                             var newForecast: HourlyForecast!
-                            
+
                             // Get date and time
                             if let dateInt = list["dt"] as? Int {
                                 let date = NSDate(timeIntervalSince1970: TimeInterval(dateInt))
                                 let day = dayFormatter.string(from: date as Date)
                                 let hour = timeFormatter.string(from: date as Date)
-                                
-                                
+
+
                                 // Index to assign the forecast to
                                 indexToSet = Int(day)! - currentDay!
                                 newTime = hour
                             }
+
                             
-                            if let main = list["main"] as? Dictionary<String, AnyObject> {
-                                if let temp = main["temp"] as? Double {
-                                    newTemp = "\(Int(temp - 273.15))" // Convert from Kelvin to Celsius
-                                }
+                            if let temp = list["temp"] as? Double {
+                                newTemp = "\(Int(temp))"
                             }
                             
+
                             if let weather = list["weather"] as? [AnyObject] {
                                 if let icon = weather[0]["icon"] as? String {
                                     newIcon = icon
                                 }
-                                
+
                                 if let description = weather[0]["description"] as? String {
                                     newWeatherDesc = description
                                 }
                             }
-                            
+
                             newForecast = HourlyForecast(time: newTime, icon: newIcon, weatherDescription: newWeatherDesc, temp: newTemp)
+
                             
                             // Prevent crash if user changed date
                             if indexToSet >= 0 {
                                 self.weekdays[indexToSet].forecasts += [newForecast]
                             }
                         }
-                        
                     }
                 }
-                NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "onReceivedForecast"), object: nil) as Notification);
+                
+                
+                NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "onReceivedWeather"), object: nil) as Notification);
                 completed()
-        }
+            }
+
+//        Alamofire.request("\(URL_BASE)forecast/?q=Brandon,ca&mode=json&units=metric&APPID=\(API_KEY)")
+//            .responseJSON { response in
+//
+//                let result = response.result
+//
+//                let currentDay = getDayOfMonth()
+//                let dayFormatter = DateFormatter()
+//
+//                let timeFormatter = DateFormatter()
+//                dayFormatter.dateFormat = "dd"
+//                timeFormatter.dateFormat = "h:mm a"
+//
+//                if let dict = result.value as? Dictionary<String, AnyObject> {
+//
+//                    if let lists = dict["list"] as? [AnyObject] {
+//
+//                        for list in lists {
+//
+//                            var indexToSet = 0
+//
+//                            var newTime = "00:00"
+//                            var newIcon = "01n"
+//                            var newTemp = "-60"
+//                            var newWeatherDesc = "CLOUDS"
+//                            var newForecast: HourlyForecast!
+//
+//                            // Get date and time
+//                            if let dateInt = list["dt"] as? Int {
+//                                let date = NSDate(timeIntervalSince1970: TimeInterval(dateInt))
+//                                let day = dayFormatter.string(from: date as Date)
+//                                let hour = timeFormatter.string(from: date as Date)
+//
+//
+//                                // Index to assign the forecast to
+//                                indexToSet = Int(day)! - currentDay!
+//                                newTime = hour
+//                            }
+//
+//                            if let main = list["main"] as? Dictionary<String, AnyObject> {
+//                                if let temp = main["temp"] as? Double {
+//                                    newTemp = "\(Int(temp - 273.15))" // Convert from Kelvin to Celsius
+//                                }
+//                            }
+//
+//                            if let weather = list["weather"] as? [AnyObject] {
+//                                if let icon = weather[0]["icon"] as? String {
+//                                    newIcon = icon
+//                                }
+//
+//                                if let description = weather[0]["description"] as? String {
+//                                    newWeatherDesc = description
+//                                }
+//                            }
+//
+//                            newForecast = HourlyForecast(time: newTime, icon: newIcon, weatherDescription: newWeatherDesc, temp: newTemp)
+//
+//                            // Prevent crash if user changed date
+//                            if indexToSet >= 0 {
+//                                self.weekdays[indexToSet].forecasts += [newForecast]
+//                            }
+//                        }
+//
+//                    }
+//                }
+//                NotificationCenter.default.post(NSNotification(name: NSNotification.Name(rawValue: "onReceivedForecast"), object: nil) as Notification);
+//                completed()
+//        }
     }
 }
 
